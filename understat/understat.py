@@ -78,13 +78,13 @@ class Understat():
 
         return fixtures
 
-    async def get_player_shots(self, player_id, conditions=None, **kwargs):
+    async def get_player_shots(self, player_id, options=None, **kwargs):
         """Returns the player with the given ID's shot data.
 
         :param player_id: The player's Understat ID.
         :type player_id: int or str
-        :param conditions: Conditions to filter the data by, defaults to None.
-        :param conditions: dict, optional
+        :param options: Options to filter the data by, defaults to None.
+        :param options: dict, optional
         :return: List of the player's shot data.
         :rtype: list
         """
@@ -92,28 +92,28 @@ class Understat():
         url = PLAYER_URL.format(player_id)
         shots_data = await get_data(self.session, url, "shotsData")
 
-        if conditions:
-            kwargs = conditions
+        if options:
+            kwargs = options
 
         filtered_data = filter_data(shots_data, kwargs)
 
         return shots_data
 
-    async def get_player_matches(self, player_id, conditions=None, **kwargs):
+    async def get_player_matches(self, player_id, options=None, **kwargs):
         """Returns the player with the given ID's matches data.
 
         :param player_id: The player's Understat ID.
         :type player_id: int or str
-        :param conditions: Conditions to filter the data by, defaults to None.
-        :param conditions: dict, optional
+        :param options: Options to filter the data by, defaults to None.
+        :param options: dict, optional
         :return: List of the player's matches data.
         :rtype: list
         """
         url = PLAYER_URL.format(player_id)
         matches_data = await get_data(self.session, url, "matchesData")
 
-        if conditions:
-            kwargs = conditions
+        if options:
+            kwargs = options
 
         filtered_data = filter_data(matches_data, kwargs)
 

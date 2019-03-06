@@ -60,9 +60,9 @@ async def get_data(session, url, data_type):
     return data
 
 
-def filter_data(data, conditions):
-    """Filters the data by the given conditions."""
+def filter_data(data, options):
+    """Filters the data by the given options."""
 
     return [item for item in data if
-            all(key in item and conditions[key] == item[key]
-                for key in conditions.keys())]
+            all(key in item and options[key] == item[key]
+                for key in options.keys())]
