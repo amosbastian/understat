@@ -7,8 +7,8 @@ class Understat():
     def __init__(self, session):
         self.session = session
 
-    async def get_teams(self, league_name, season):
-        """Returns a dictionary containing information about all the teams in
+    async def get_teams(self, league_name, season, options=None, **kwargs):
+        """Returns a list containing information about all the teams in
         the given league in the given season.
 
         :param league_name: The league's name.
@@ -17,13 +17,18 @@ class Understat():
         :type season: str or int
         :return: A dictionary of the league's table as seen on Understat's
             league overview.
-        :rtype: dict
+        :rtype: list
         """
 
         url = LEAGUE_URL.format(to_league_name(league_name), season)
-        team_data = await get_data(self.session, url, "teamsData")
+        teams_data = await get_data(self.session, url, "teamsData")
 
-        return team_data
+        if options:
+            kwargs = options
+
+        filtered_data = filter_data(list(teams_data.values()), kwargs)
+
+        return filtered_data
 
     async def get_players(self, league_name, season):
         """Returns a list containing information about all the players in
