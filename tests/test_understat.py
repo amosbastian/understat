@@ -17,7 +17,22 @@ class TestUnderstat(object):
     async def test_get_teams(self, loop, understat):
         for league in leagues:
             teams = await understat.get_teams(league, 2018)
-            assert isinstance(teams, dict)
+            assert isinstance(teams, list)
+
+    async def test_get_team_with_options(self, loop, understat):
+        team = await understat.get_teams(
+            "epl", 2018, {"title": "Manchester United"})
+        assert isinstance(team, list)
+        assert len(team) == 1
+
+        team = await understat.get_teams(
+            "epl", 2018, title="Manchester United")
+        assert isinstance(team, list)
+        assert len(team) == 1
+
+        team = await understat.get_teams("epl", 2018, title="Reddit United")
+        assert isinstance(team, list)
+        assert not team
 
     async def test_get_players(self, loop, understat):
         for league in leagues:
