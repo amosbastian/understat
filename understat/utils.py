@@ -68,3 +68,15 @@ def filter_data(data, options):
     return [item for item in data if
             all(key in item and options[key] == item[key]
                 for key in options.keys())]
+
+
+def filter_by_positions(data, positions):
+    """Filter data by positions."""
+    relevant_stats = []
+
+    for position, stats in data.items():
+        if not positions or position in positions:
+            stats["position"] = position
+            relevant_stats.append(stats)
+
+    return relevant_stats

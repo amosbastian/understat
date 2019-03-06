@@ -161,7 +161,6 @@ class Understat():
         url = PLAYER_URL.format(player_id)
         player_stats = await get_data(self.session, url, "minMaxPlayerStats")
 
-        if positions:
-            player_stats = filter_by_positions(player_stats, positions)
+        player_stats = filter_by_positions(player_stats, positions)
 
         return player_stats
