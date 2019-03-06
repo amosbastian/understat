@@ -1,3 +1,6 @@
+import re
+
+
 def to_league_name(league_name):
     league_mapper = {
         "epl": "EPL",
@@ -18,3 +21,11 @@ async def fetch(session, url):
                 return await response.json()
         except Exception:
             pass
+
+
+def find_match(scripts, pattern):
+    for script in scripts:
+        match = re.search(pattern, script.string)
+        if match:
+            break
+    return match
