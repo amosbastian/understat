@@ -26,16 +26,15 @@ class Understat():
         return team_data
 
     async def get_players(self, league_name, season):
-        """Returns a dictionary containing information about all the players in
+        """Returns a list containing information about all the players in
         the given league in the given season.
 
         :param league_name: The league's name.
         :type league_name: str
         :param season: The season.
         :type season: str or int
-        :return: A dictionary of the players table as seen on Understat's
-            league overview.
-        :rtype: dict
+        :return: A list of the players as seen on Understat's league overview.
+        :rtype: list
         """
 
         url = LEAGUE_URL.format(to_league_name(league_name), season)
@@ -44,16 +43,15 @@ class Understat():
         return players_data
 
     async def get_results(self, league_name, season):
-        """Returns a dictionary containing information about all the results
+        """Returns a list containing information about all the results
         (matches) played by the teams in the given league in the given season.
 
         :param league_name: The league's name.
         :type league_name: str
         :param season: The season.
         :type season: str or int
-        :return: A dictionary of the results table as seen on Understat's
-            league overview.
-        :rtype: dict
+        :return: A list of the results as seen on Understat's league overview.
+        :rtype: list
         """
 
         url = LEAGUE_URL.format(to_league_name(league_name), season)
@@ -63,16 +61,15 @@ class Understat():
         return results
 
     async def get_fixtures(self, league_name, season):
-        """Returns a dictionary containing information about all the upcoming
+        """Returns a list containing information about all the upcoming
         fixtures of the given league in the given season.
 
         :param league_name: The league's name.
         :type league_name: str
         :param season: The season.
         :type season: str or int
-        :return: A dictionary of the fixtures table as seen on Understat's
-            league overview.
-        :rtype: dict
+        :return: A list of the fixtures as seen on Understat's league overview.
+        :rtype: list
         """
 
         url = LEAGUE_URL.format(to_league_name(league_name), season)
