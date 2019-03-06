@@ -14,6 +14,8 @@ class Understat():
         :param league_name: The league's name.
         :type league_name: str
         :param season: The season.
+        :param options: Options to filter the data by, defaults to None.
+        :param options: dict, optional
         :type season: str or int
         :return: A dictionary of the league's table as seen on Understat's
             league overview.
@@ -37,6 +39,8 @@ class Understat():
         :param league_name: The league's name.
         :type league_name: str
         :param season: The season.
+        :param options: Options to filter the data by, defaults to None.
+        :param options: dict, optional
         :type season: str or int
         :return: A list of the players as seen on Understat's league overview.
         :rtype: list
