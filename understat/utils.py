@@ -8,6 +8,9 @@ from understat.constants import PATTERN
 
 
 def to_league_name(league_name):
+    """Maps league name to the league name used by Understat for ease of use.
+    """
+
     league_mapper = {
         "epl": "EPL",
         "la_liga": "La_liga",
@@ -25,6 +28,8 @@ async def fetch(session, url):
 
 
 def find_match(scripts, pattern):
+    """Returns the first match found in the given scripts."""
+
     for script in scripts:
         match = re.search(pattern, script.string)
         if match:
@@ -34,12 +39,16 @@ def find_match(scripts, pattern):
 
 
 def decode_data(match):
+    """Returns data in the match's first group decoded to JSON."""
+
     byte_data = codecs.escape_decode(match.group(1))
     json_data = json.loads(byte_data[0].decode("utf-8"))
 
     return json_data
 
 async def get_data(session, url, data_type):
+    """Returns data from the given URL of the given data type."""
+
     html = await fetch(session, url)
     soup = BeautifulSoup(html, "html.parser")
     scripts = soup.find_all("script")
