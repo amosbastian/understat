@@ -56,13 +56,15 @@ class Understat():
 
         return filtered_data
 
-    async def get_results(self, league_name, season):
+    async def get_results(self, league_name, season, options=None, **kwargs):
         """Returns a list containing information about all the results
         (matches) played by the teams in the given league in the given season.
 
         :param league_name: The league's name.
         :type league_name: str
         :param season: The season.
+        :param options: Options to filter the data by, defaults to None.
+        :param options: dict, optional
         :type season: str or int
         :return: A list of the results as seen on Understat's league overview.
         :rtype: list
@@ -72,7 +74,12 @@ class Understat():
         dates_data = await get_data(self.session, url, "datesData")
         results = [r for r in dates_data if r["isResult"]]
 
-        return results
+        if options:
+            kwargs = options
+
+        filtered_data = filter_data(results, kwargs)
+
+        return filtered_data
 
     async def get_fixtures(self, league_name, season):
         """Returns a list containing information about all the upcoming
