@@ -16,13 +16,8 @@ def to_league_name(league_name):
 
 
 async def fetch(session, url):
-    while True:
-        try:
-            async with session.get(url) as response:
-                assert response.status == 200
-                return await response.json()
-        except Exception:
-            pass
+    async with session.get(url) as response:
+        return await response.text()
 
 
 def find_match(scripts, pattern):
