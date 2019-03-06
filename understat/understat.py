@@ -1,6 +1,6 @@
 from understat.constants import LEAGUE_URL, PLAYER_URL
-from understat.utils import (decode_data, fetch, find_match, get_data,
-                             to_league_name)
+from understat.utils import (decode_data, fetch, filter_data, find_match,
+                             get_data, to_league_name)
 
 
 class Understat():
@@ -78,14 +78,43 @@ class Understat():
 
         return fixtures
 
-    async def get_player_shots(self, player_id):
+    async def get_player_shots(self, player_id, conditions=None, **kwargs):
+        """Returns the player with the given ID's shot data.
+
+        :param player_id: The player's Understat ID.
+        :type player_id: int or str
+        :param conditions: Conditions to filter the data by, defaults to None.
+        :param conditions: dict, optional
+        :return: List of the player's shot data.
+        :rtype: list
+        """
+
         url = PLAYER_URL.format(player_id)
         shots_data = await get_data(self.session, url, "shotsData")
 
+        if conditions:
+            kwargs = conditions
+
+        filtered_data = filter_data(shots_data, kwargs)
+
         return shots_data
 
-    async def get_player_matches(self, player_id):
+    async def get_player_matches(self, player_id, conditions=None, **kwargs):
+        """Returns the player with the given ID's matches data.
+
+        :param player_id: The player's Understat ID.
+        :type player_id: int or str
+        :param conditions: Conditions to filter the data by, defaults to None.
+        :param conditions: dict, optional
+        :return: List of the player's matches data.
+        :rtype: list
+        """
         url = PLAYER_URL.format(player_id)
         matches_data = await get_data(self.session, url, "matchesData")
 
-        return matches_data
+        if conditions:
+            kwargs = conditions
+
+        filtered_data = filter_data(matches_data, kwargs)
+
+        return filtered_data
