@@ -164,3 +164,17 @@ class Understat():
         player_stats = filter_by_positions(player_stats, positions)
 
         return player_stats
+
+    async def get_player_grouped_stats(self, player_id):
+        """Returns the player with the given ID's grouped stats (as seen at
+        the top of a player's page).
+
+        :param player_id: The player's Understat ID.
+        :type player_id: int or str
+        :return: Dictionary of the player's grouped stats.
+        :rtype: dict
+        """
+        url = PLAYER_URL.format(player_id)
+        player_stats = await get_data(self.session, url, "groupsData")
+
+        return player_stats
