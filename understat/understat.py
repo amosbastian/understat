@@ -30,7 +30,7 @@ class Understat():
 
         return filtered_data
 
-    async def get_players(self, league_name, season):
+    async def get_players(self, league_name, season, options=None, **kwargs):
         """Returns a list containing information about all the players in
         the given league in the given season.
 
@@ -45,7 +45,12 @@ class Understat():
         url = LEAGUE_URL.format(to_league_name(league_name), season)
         players_data = await get_data(self.session, url, "playersData")
 
-        return players_data
+        if options:
+            kwargs = options
+
+        filtered_data = filter_data(players_data, kwargs)
+
+        return filtered_data
 
     async def get_results(self, league_name, season):
         """Returns a list containing information about all the results
