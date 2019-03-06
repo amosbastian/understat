@@ -1,4 +1,4 @@
-from understat.constants import LEAGUE_URL
+from understat.constants import LEAGUE_URL, PLAYER_URL
 from understat.utils import (decode_data, fetch, find_match, get_data,
                              to_league_name)
 
@@ -77,3 +77,9 @@ class Understat():
         fixtures = [f for f in dates_data if not f["isResult"]]
 
         return fixtures
+
+    async def get_player_shots(self, player_id):
+        url = PLAYER_URL.format(player_id)
+        shots_data = await get_data(self.session, url, "shotsData")
+
+        return shots_data
