@@ -129,3 +129,12 @@ class TestUnderstat(object):
         player_matches = await understat.get_player_matches(
             619, h_team="Manchester United")
         assert isinstance(player_matches, list)
+
+    async def test_get_player_stats(self, loop, understat):
+        player_stats = await understat.get_player_stats(619)
+        assert isinstance(player_stats, list)
+        assert len(player_stats) > 1
+
+        player_stats = await understat.get_player_stats(619, ["FW"])
+        assert isinstance(player_stats, list)
+        assert len(player_stats) == 1
