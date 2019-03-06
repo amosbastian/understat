@@ -1,6 +1,6 @@
 from understat.constants import LEAGUE_URL, PLAYER_URL
 from understat.utils import (decode_data, fetch, filter_data, find_match,
-                             get_data, to_league_name)
+                             get_data, to_league_name, filter_by_positions)
 
 
 class Understat():
@@ -146,3 +146,22 @@ class Understat():
         filtered_data = filter_data(matches_data, kwargs)
 
         return filtered_data
+
+    async def get_player_stats(self, player_id, positions=None):
+        """Returns the player with the given ID's min / max stats, per
+        position(s).
+
+        :param player_id: The player's Understat ID.
+        :type player_id: int or str
+        :param positions: Positions to filter the data by, defaults to None.
+        :param positions: list, optional
+        :return: List of the player's stats per position.
+        :rtype: list
+        """
+        url = PLAYER_URL.format(player_id)
+        player_stats = await get_data(self.session, url, "minMaxPlayerStats")
+
+        if positions:
+            player_stats = filter_by_positions(player_stats, positions)
+
+        return player_stats
