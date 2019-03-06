@@ -1,4 +1,2 @@
-import re
-
-LEAGUE_URL = "https://understat.com/league/{}"
-PLAYERS_PATTERN = "var\s+playersData\s+=\s+JSON.parse\(\'(.*?)\'\);"
+LEAGUE_URL = "https://understat.com/league/{}/{}"
+PATTERN = r"var\s+{}\s+=\s+JSON.parse\(\'(.*?)\'\);"
