@@ -39,3 +39,7 @@ class TestUnderstat(object):
 
         for fixture in fixtures:
             assert not fixture["isResult"]
+
+    async def test_get_player_shots(self, loop, understat):
+        player_shots = await understat.get_player_shots(619)
+        assert isinstance(player_shots, list)
