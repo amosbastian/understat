@@ -1,3 +1,5 @@
+import codecs
+import json
 import re
 
 
@@ -28,4 +30,12 @@ def find_match(scripts, pattern):
         match = re.search(pattern, script.string)
         if match:
             break
+
     return match
+
+
+def decode_data(match):
+    byte_data = codecs.escape_decode(match.group(1))
+    json_data = json.loads(byte_data[0].decode("utf-8"))
+
+    return json_data
