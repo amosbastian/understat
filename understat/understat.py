@@ -65,3 +65,20 @@ class Understat():
 
         results = [result for result in results_data if result["isResult"]]
         return results
+
+    async def get_fixtures(self, league_name, season):
+        league_name = to_league_name(league_name)
+        url = LEAGUE_URL.format(league_name, season)
+
+        html = await fetch(self.session, url)
+        soup = BeautifulSoup(html, "html.parser")
+        scripts = soup.find_all("script")
+
+        pattern = re.compile(PATTERN.format("datesData"))
+        match = find_match(scripts, pattern)
+        fixtures_data = decode_data(match)
+
+        fixtures = [fixture for fixture in fixtures_data
+                    if not fixture["isResult"]]
+
+        return fixtures
