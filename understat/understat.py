@@ -36,3 +36,17 @@ class Understat():
         team_data = decode_data(match)
 
         return team_data
+
+    async def get_players(self, league_name, season):
+        league_name = to_league_name(league_name)
+        url = LEAGUE_URL.format(league_name, season)
+
+        html = await fetch(self.session, url)
+        soup = BeautifulSoup(html, "html.parser")
+        scripts = soup.find_all("script")
+
+        pattern = re.compile(PATTERN.format("playersData"))
+        match = find_match(scripts, pattern)
+        players_data = decode_data(match)
+
+        return players_data
