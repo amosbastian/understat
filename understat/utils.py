@@ -58,3 +58,11 @@ async def get_data(session, url, data_type):
     data = decode_data(match)
 
     return data
+
+
+def filter_data(data, conditions):
+    """Filters the data by the given conditions."""
+
+    return [item for item in data if
+            all(key in item and conditions[key] == item[key]
+                for key in conditions.keys())]
