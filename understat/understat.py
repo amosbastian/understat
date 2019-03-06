@@ -83,3 +83,9 @@ class Understat():
         shots_data = await get_data(self.session, url, "shotsData")
 
         return shots_data
+
+    async def get_player_matches(self, player_id):
+        url = PLAYER_URL.format(player_id)
+        matches_data = await get_data(self.session, url, "matchesData")
+
+        return matches_data
