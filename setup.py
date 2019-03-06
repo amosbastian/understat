@@ -27,8 +27,9 @@ setup(
         "Source": "https://github.com/amosbastian/fpl"
     },
     install_requires=[
-        "codecov",
         "aiohttp",
+        "bs4",
+        "codecov",
         "pytest-aiohttp",
         "pytest-cov",
         "pytest-mock",
