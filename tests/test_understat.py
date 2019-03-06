@@ -3,7 +3,6 @@ import pytest
 
 from understat import Understat
 
-
 leagues = ["epl", "la_liga", "bundesliga", "serie_a", "ligue_1", "rfpl"]
 
 
@@ -138,3 +137,7 @@ class TestUnderstat(object):
         player_stats = await understat.get_player_stats(619, ["FW"])
         assert isinstance(player_stats, list)
         assert len(player_stats) == 1
+
+    async def test_get_player_grouped_stats(self, loop, understat):
+        grouped_stats = await understat.get_player_grouped_stats(619)
+        assert isinstance(grouped_stats, dict)
