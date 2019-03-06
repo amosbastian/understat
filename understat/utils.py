@@ -8,3 +8,13 @@ def to_league_name(league_name):
         "rfpl": "RFPL"
     }
     return league_mapper[league_name]
+
+
+async def fetch(session, url):
+    while True:
+        try:
+            async with session.get(url) as response:
+                assert response.status == 200
+                return await response.json()
+        except Exception:
+            pass
