@@ -43,3 +43,7 @@ class TestUnderstat(object):
     async def test_get_player_shots(self, loop, understat):
         player_shots = await understat.get_player_shots(619)
         assert isinstance(player_shots, list)
+
+    async def test_get_matches(self, loop, understat):
+        player_matches = await understat.get_player_matches(619)
+        assert isinstance(player_matches, list)
