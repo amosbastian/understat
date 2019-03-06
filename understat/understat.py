@@ -63,9 +63,9 @@ class Understat():
         :param league_name: The league's name.
         :type league_name: str
         :param season: The season.
+        :type season: str or int
         :param options: Options to filter the data by, defaults to None.
         :param options: dict, optional
-        :type season: str or int
         :return: A list of the results as seen on Understat's league overview.
         :rtype: list
         """
@@ -81,7 +81,7 @@ class Understat():
 
         return filtered_data
 
-    async def get_fixtures(self, league_name, season):
+    async def get_fixtures(self, league_name, season,  options=None, **kwargs):
         """Returns a list containing information about all the upcoming
         fixtures of the given league in the given season.
 
@@ -89,6 +89,8 @@ class Understat():
         :type league_name: str
         :param season: The season.
         :type season: str or int
+        :param options: Options to filter the data by, defaults to None.
+        :param options: dict, optional
         :return: A list of the fixtures as seen on Understat's league overview.
         :rtype: list
         """
@@ -97,7 +99,12 @@ class Understat():
         dates_data = await get_data(self.session, url, "datesData")
         fixtures = [f for f in dates_data if not f["isResult"]]
 
-        return fixtures
+        if options:
+            kwargs = options
+
+        filtered_data = filter_data(fixtures, kwargs)
+
+        return filtered_data
 
     async def get_player_shots(self, player_id, options=None, **kwargs):
         """Returns the player with the given ID's shot data.
