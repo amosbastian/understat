@@ -4,8 +4,9 @@ import re
 import aiohttp
 from bs4 import BeautifulSoup
 
-from understat.constants import LEAGUE_URL, PATTERN
-from understat.utils import decode_data, fetch, find_match, to_league_name
+from understat.constants import LEAGUE_URL
+from understat.utils import (decode_data, fetch, find_match, get_data,
+                             to_league_name)
 
 
 class Understat():
@@ -24,61 +25,27 @@ class Understat():
         :rtype: dict
         """
 
-        league_name = to_league_name(league_name)
-        url = LEAGUE_URL.format(league_name, season)
-
-        html = await fetch(self.session, url)
-        soup = BeautifulSoup(html, "html.parser")
-        scripts = soup.find_all("script")
-
-        pattern = re.compile(PATTERN.format("teamsData"))
-        match = find_match(scripts, pattern)
-        team_data = decode_data(match)
+        url = LEAGUE_URL.format(to_league_name(league_name), season)
+        team_data = await get_data(self.session, url, "teamsData")
 
         return team_data
 
     async def get_players(self, league_name, season):
-        league_name = to_league_name(league_name)
-        url = LEAGUE_URL.format(league_name, season)
-
-        html = await fetch(self.session, url)
-        soup = BeautifulSoup(html, "html.parser")
-        scripts = soup.find_all("script")
-
-        pattern = re.compile(PATTERN.format("playersData"))
-        match = find_match(scripts, pattern)
-        players_data = decode_data(match)
+        url = LEAGUE_URL.format(to_league_name(league_name), season)
+        players_data = await get_data(self.session, url, "playersData")
 
         return players_data
 
     async def get_results(self, league_name, season):
-        league_name = to_league_name(league_name)
-        url = LEAGUE_URL.format(league_name, season)
+        url = LEAGUE_URL.format(to_league_name(league_name), season)
+        dates_data = await get_data(self.session, url, "datesData")
+        results = [r for r in dates_data if r["isResult"]]
 
-        html = await fetch(self.session, url)
-        soup = BeautifulSoup(html, "html.parser")
-        scripts = soup.find_all("script")
-
-        pattern = re.compile(PATTERN.format("datesData"))
-        match = find_match(scripts, pattern)
-        results_data = decode_data(match)
-
-        results = [result for result in results_data if result["isResult"]]
         return results
 
     async def get_fixtures(self, league_name, season):
-        league_name = to_league_name(league_name)
-        url = LEAGUE_URL.format(league_name, season)
-
-        html = await fetch(self.session, url)
-        soup = BeautifulSoup(html, "html.parser")
-        scripts = soup.find_all("script")
-
-        pattern = re.compile(PATTERN.format("datesData"))
-        match = find_match(scripts, pattern)
-        fixtures_data = decode_data(match)
-
-        fixtures = [fixture for fixture in fixtures_data
-                    if not fixture["isResult"]]
+        url = LEAGUE_URL.format(to_league_name(league_name), season)
+        dates_data = await get_data(self.session, url, "datesData")
+        fixtures = [f for f in dates_data if not f["isResult"]]
 
         return fixtures

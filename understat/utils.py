@@ -2,6 +2,10 @@ import codecs
 import json
 import re
 
+from bs4 import BeautifulSoup
+
+from understat.constants import PATTERN
+
 
 def to_league_name(league_name):
     league_mapper = {
@@ -34,3 +38,14 @@ def decode_data(match):
     json_data = json.loads(byte_data[0].decode("utf-8"))
 
     return json_data
+
+async def get_data(session, url, data_type):
+    html = await fetch(session, url)
+    soup = BeautifulSoup(html, "html.parser")
+    scripts = soup.find_all("script")
+
+    pattern = re.compile(PATTERN.format(data_type))
+    match = find_match(scripts, pattern)
+    data = decode_data(match)
+
+    return data
