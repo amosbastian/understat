@@ -1,11 +1,21 @@
-from understat.constants import LEAGUE_URL, PLAYER_URL
-from understat.utils import (decode_data, fetch, filter_data, find_match,
-                             get_data, to_league_name, filter_by_positions)
+from understat.constants import BASE_URL, LEAGUE_URL, PLAYER_URL
+from understat.utils import (decode_data, fetch, filter_by_positions,
+                             filter_data, find_match, get_data, to_league_name)
 
 
 class Understat():
     def __init__(self, session):
         self.session = session
+
+    async def get_stats(self, options=None, **kwargs):
+        stats = await get_data(self.session, BASE_URL, "statData")
+
+        if options:
+            kwargs = options
+
+        filtered_data = filter_data(stats, kwargs)
+
+        return filtered_data
 
     async def get_teams(self, league_name, season, options=None, **kwargs):
         """Returns a list containing information about all the teams in
