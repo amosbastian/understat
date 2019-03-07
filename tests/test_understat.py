@@ -13,6 +13,17 @@ class TestUnderstat(object):
         assert understat.session is session
         await session.close()
 
+    async def test_get_stats(self, loop, understat):
+        stats = await understat.get_stats()
+        assert isinstance(stats, list)
+
+    async def test_get_stats_with_options(self, loop, understat):
+        stats = await understat.get_stats(league="EPL")
+        assert isinstance(stats, list)
+
+        stats = await understat.get_stats({"league": "EPL", "month": "8"})
+        assert isinstance(stats, list)
+
     async def test_get_teams(self, loop, understat):
         for league in leagues:
             teams = await understat.get_teams(league, 2018)
