@@ -1,6 +1,6 @@
 from understat.constants import BASE_URL, LEAGUE_URL, PLAYER_URL
 from understat.utils import (decode_data, fetch, filter_by_positions,
-                             filter_data, find_match, get_data, to_league_name)
+                             filter_data, get_data, to_league_name)
 
 
 class Understat():
@@ -143,7 +143,7 @@ class Understat():
 
         filtered_data = filter_data(shots_data, kwargs)
 
-        return shots_data
+        return filtered_data
 
     async def get_player_matches(self, player_id, options=None, **kwargs):
         """Returns the player with the given ID's matches data.

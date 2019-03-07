@@ -1,7 +1,3 @@
-import aiohttp
-import pytest
-
-from understat import Understat
 from understat.utils import filter_by_positions, filter_data, to_league_name
 
 
