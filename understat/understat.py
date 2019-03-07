@@ -8,6 +8,14 @@ class Understat():
         self.session = session
 
     async def get_stats(self, options=None, **kwargs):
+        """Returns a list containing stats of every league, grouped by month.
+
+        :param options: Options to filter the data by, defaults to None.
+        :param options: dict, optional
+        :return: List of dictionaries.
+        :rtype: list
+        """
+
         stats = await get_data(self.session, BASE_URL, "statData")
 
         if options:
@@ -27,7 +35,7 @@ class Understat():
         :param options: Options to filter the data by, defaults to None.
         :param options: dict, optional
         :type season: str or int
-        :return: A dictionary of the league's table as seen on Understat's
+        :return: A list of the league's table as seen on Understat's
             league overview.
         :rtype: list
         """
