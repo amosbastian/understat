@@ -33,6 +33,30 @@ Once it has been downloaded you can easily install it using `pip`::
     $ cd understat
     $ pip install .
 
+## Usage
+
+An example of using `Understat` can be found below:
+
+    import asyncio
+    import json
+
+    import aiohttp
+
+    from understat import Understat
+
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            data = await understat.get_players("epl", 2018, {"team_title": "Manchester United"})
+            print(json.dumps(data))
+
+
+    if __name__ == "__main__":
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(main())
+
+
 ## Contributing
 
 1. Fork the repository on GitHub.
