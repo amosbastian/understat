@@ -19,7 +19,10 @@ def to_league_name(league_name):
         "ligue_1": "Ligue_1",
         "rfpl": "RFPL"
     }
-    return league_mapper[league_name]
+    try:
+        return league_mapper[league_name]
+    except KeyError:
+        return league_name
 
 
 async def fetch(session, url):
