@@ -2,8 +2,7 @@ import aiohttp
 import pytest
 
 from understat import Understat
-from understat.utils import (filter_by_positions, filter_data, find_match,
-                             to_league_name)
+from understat.utils import filter_by_positions, filter_data, to_league_name
 
 
 class TestUtils(object):
