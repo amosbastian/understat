@@ -1,6 +1,6 @@
 from understat.constants import BASE_URL, LEAGUE_URL, PLAYER_URL
-from understat.utils import (decode_data, fetch, filter_by_positions,
-                             filter_data, get_data, to_league_name)
+from understat.utils import (decode_data, filter_by_positions, filter_data,
+                             get_data, to_league_name)
 
 
 class Understat():
