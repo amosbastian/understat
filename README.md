@@ -1,5 +1,5 @@
 <p align="center">
-    A Python wrapper for https://understat.com/.
+    A Python package for https://understat.com/.
     <br>
     <br>
     <a href="https://www.codacy.com/app/amosbastian/understat?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=amosbastian/understat&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/716b2c24086a41d7a79481ac89748861"/></a>
