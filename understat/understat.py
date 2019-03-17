@@ -1,4 +1,4 @@
-from understat.constants import BASE_URL, LEAGUE_URL, PLAYER_URL
+from understat.constants import BASE_URL, LEAGUE_URL, PLAYER_URL, TEAM_URL
 from understat.utils import (filter_by_positions, filter_data, get_data,
                              to_league_name)
 
@@ -196,3 +196,20 @@ class Understat():
         player_stats = await get_data(self.session, url, "groupsData")
 
         return player_stats
+
+    async def get_team_stats(self, team_name, season):
+        """Returns a team's stats, as seen on their page on Understat, in the
+        given season.
+
+        :param team_name: A team's name, e.g. Manchester United.
+        :type team_name: str
+        :param season: A season / year, e.g. 2018.
+        :type season: int or str
+        :return: A dictionary containing a team's stats.
+        :rtype: dict
+        """
+
+        url = TEAM_URL.format(team_name.replace(" ", "_"), season)
+        team_stats = await get_data(self.session, url, "statisticsData")
+
+        return team_stats
