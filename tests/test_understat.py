@@ -151,3 +151,7 @@ class TestUnderstat(object):
     async def test_get_player_grouped_stats(self, loop, understat):
         grouped_stats = await understat.get_player_grouped_stats(619)
         assert isinstance(grouped_stats, dict)
+
+    async def test_get_team_stats(self, loop, understat):
+        team_stats = await understat.get_team_stats("Manchester United", 2018)
+        assert isinstance(team_stats, dict)
