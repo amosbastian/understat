@@ -50,7 +50,8 @@ class Understat():
 
         return filtered_data
 
-    async def get_players(self, league_name, season, options=None, **kwargs):
+    async def get_league_players(
+            self, league_name, season, options=None, **kwargs):
         """Returns a list containing information about all the players in
         the given league in the given season.
 

@@ -43,26 +43,26 @@ class TestUnderstat(object):
         assert isinstance(team, list)
         assert not team
 
-    async def test_get_players(self, loop, understat):
+    async def test_get_league_players(self, loop, understat):
         for league in leagues:
-            players = await understat.get_players(league, 2018)
+            players = await understat.get_league_players(league, 2018)
             assert isinstance(players, list)
 
-    async def test_get_players_with_options(self, loop, understat):
-        player = await understat.get_players(
+    async def test_get_league_players_with_options(self, loop, understat):
+        player = await understat.get_league_players(
             "epl", 2018, player_name="Paul Pogba",
             team_title="Manchester United")
         assert isinstance(player, list)
         assert len(player) == 1
 
-        player = await understat.get_players(
+        player = await understat.get_league_players(
             "epl", 2018, {"position": "F S",
                           "yellow_cards": "3",
                           "player_name": "Sergio Agüero"})
         assert isinstance(player, list)
         assert len(player) == 1
 
-        player = await understat.get_players(
+        player = await understat.get_league_players(
             "epl", 2018, player_name="Lionel Messi")
         assert isinstance(player, list)
         assert not player
