@@ -21,7 +21,7 @@ used for interacting with Understat's data. It requires a
     async def main():
         async with aiohttp.ClientSession() as session:
             understat = Understat(session)
-            player = await understat.get_players(
+            player = await understat.get_league_players(
                 "epl", 2018,
                 player_name="Paul Pogba",
                 team_title="Manchester United"
@@ -55,7 +55,7 @@ help with adding better filtering, if necessary, is also very much appreciated!
 
 ---
 
-.. automethod:: understat.Understat.get_fixtures
+.. automethod:: understat.Understat.get_league_fixtures
 
 It returns the fixtures (not results) of the given league, in the given season.
 So for example, the fixtures as seen in the screenshot below
@@ -72,11 +72,15 @@ at **home**, then you could do the following
     async def main():
         async with aiohttp.ClientSession() as session:
             understat = Understat(session)
-            fixtures = await understat.get_fixtures("epl", 2018, {
-                "h": {"id": "89",
-                      "title": "Manchester United",
-                      "short_title": "MUN"}
-            })
+            fixtures = await understat.get_league_fixtures(
+                "epl",
+                2018, 
+                {
+                    "h": {"id": "89",
+                          "title": "Manchester United",
+                          "short_title": "MUN"}
+                }
+            )
             print(json.dumps(fixtures))
 
     loop = asyncio.get_event_loop()
@@ -774,7 +778,7 @@ which outputs
 
 ---
 
-.. automethod:: understat.Understat.get_players
+.. automethod:: understat.Understat.get_league_players
 
 It returns all the information about the players in a given league in the given
 season. This includes stuff like their number of goals scored, their total
@@ -794,7 +798,7 @@ could do the following
     async def main():
         async with aiohttp.ClientSession() as session:
             understat = Understat(session)
-            players = await understat.get_players(
+            players = await understat.get_league_players(
                 "epl",
                 2018,
                 team_title="Manchester United"
@@ -854,7 +858,7 @@ which outputs (with parts omitted)
 
 ---
 
-.. automethod:: understat.Understat.get_results
+.. automethod:: understat.Understat.get_league_results
 
 It returns the results (not fixtures) of the given league, in the given season.
 So for example, the results as seen in the screenshot below
@@ -871,11 +875,15 @@ could do the following
     async def main():
         async with aiohttp.ClientSession() as session:
             understat = Understat(session)
-            fixtures = await understat.get_results("epl", 2018, {
-                "a": {"id": "89",
-                      "title": "Manchester United",
-                      "short_title": "MUN"}
-            })
+            fixtures = await understat.get_league_results(
+                "epl", 
+                2018, 
+                {
+                    "a": {"id": "89",
+                        "title": "Manchester United",
+                        "short_title": "MUN"}
+                }
+            )
             print(json.dumps(fixtures))
 
     loop = asyncio.get_event_loop()
@@ -1041,6 +1049,62 @@ which outputs
 
 .. automethod:: understat.Understat.get_team_players
 
+It returns all the information about the players of a given team in the given
+season. This includes stuff like their number of goals scored, their total
+expected assists and more. Basically, it's all the information you can find
+in the player table shown on all team overview pages on
+`understat.com <https://understat.com>`_.
+
+.. image:: https://i.imgur.com/N53k9Ao.png
+
+The function comes with the `options` keyword argument, and the `**kwargs`
+magic variable, and so that can be used to filter the output. This is similar
+to the `get_league_players` function, but is quicker and easier. For example,
+if you, once again, wanted to get all Manchester United's players who have only
+played games as a forward, then you could do the following
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            results = await understat.get_team_players(
+                "Manchester United",
+                2018,
+                position="F S"
+            )
+            print(json.dumps(results))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs
+
+.. code-block:: javascript
+
+    [
+        {
+            "id": "594",
+            "player_name": "Romelu Lukaku",
+            "games": "27",
+            "time": "1768",
+            "goals": "12",
+            "xG": "12.054240763187408",
+            "assists": "0",
+            "xA": "1.6836179178208113",
+            "shots": "50",
+            "key_passes": "17",
+            "yellow_cards": "4",
+            "red_cards": "0",
+            "position": "F S",
+            "team_title": "Manchester United",
+            "npg": "12",
+            "npxG": "12.054240763187408",
+            "xGChain": "12.832402393221855",
+            "xGBuildup": "3.366600174456835"
+        }
+    ]
+
 ---
 
 .. automethod:: understat.Understat.get_team_results
@@ -1052,17 +1116,17 @@ So for example, the fixtures as seen in the screenshot below
 
 The function comes with the `options` keyword argument, and the `**kwargs`
 magic variable, and so that can be used to filter the output. This is similar
-to the `get_results` function, but it makes certain options for filtering much
-easier. For example, if you, once again, wanted to get all Manchester United's
-results at **home**, then instead of passing a dictionary as keyword argument,
-you could simply do the following
+to the `get_league_results` function, but it makes certain options for
+filtering much easier. For example, if you, once again, wanted to get all
+Manchester United's results at **home**, then instead of passing a dictionary
+as keyword argument, you could simply do the following
 
 .. code-block:: python
 
     async def main():
         async with aiohttp.ClientSession() as session:
             understat = Understat(session)
-            results = await understat.get_team_results(\
+            results = await understat.get_team_results(
                 "Manchester United",
                 2018,
                 side="h"
