@@ -1,7 +1,7 @@
 .. _installation:
 
 Installing **understat**
-==================
+========================
 
 The recommended way to install ``understat`` is via ``pip``.
 
