@@ -764,6 +764,82 @@ which outputs
 
 .. automethod:: understat.Understat.get_players
 
+It returns all the information about the players in a given league in the given
+season. This includes stuff like their number of goals scored, their total
+expected assists and more. Basically, it's all the information you can find
+in the player table shown on all league overview pages on
+`understat.com <https://understat.com>`_.
+
+.. image:: https://i.imgur.com/vPJzqnd.png
+
+The function comes with the `options` keyword argument, and the `**kwargs`
+magic variable, and so that can be used to filter the output. So for example,
+if you wanted to get all the players who play for Manchester United, then you
+could do the following
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            players = await understat.get_players(
+                "epl",
+                2018,
+                team_title="Manchester United"
+            )
+            print(json.dumps(players))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs (with parts omitted)
+
+.. code-block:: javascript
+
+    [
+        {
+            "id": "594",
+            "player_name": "Romelu Lukaku",
+            "games": "27",
+            "time": "1768",
+            "goals": "12",
+            "xG": "12.054240763187408",
+            "assists": "0",
+            "xA": "1.6836179178208113",
+            "shots": "50",
+            "key_passes": "17",
+            "yellow_cards": "4",
+            "red_cards": "0",
+            "position": "F S",
+            "team_title": "Manchester United",
+            "npg": "12",
+            "npxG": "12.054240763187408",
+            "xGChain": "12.832402393221855",
+            "xGBuildup": "3.366600174456835"
+        },
+        ...,
+        {
+            "id": "1740",
+            "player_name": "Paul Pogba",
+            "games": "27",
+            "time": "2293",
+            "goals": "11",
+            "xG": "13.361832823604345",
+            "assists": "9",
+            "xA": "4.063152700662613",
+            "shots": "87",
+            "key_passes": "40",
+            "yellow_cards": "5",
+            "red_cards": "0",
+            "position": "M S",
+            "team_title": "Manchester United",
+            "npg": "6",
+            "npxG": "7.272482139989734",
+            "xGChain": "17.388037759810686",
+            "xGBuildup": "8.965998269617558"
+        }
+    ]
+
 ---
 
 .. automethod:: understat.Understat.get_results
