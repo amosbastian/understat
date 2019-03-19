@@ -1045,6 +1045,89 @@ which outputs
 
 .. automethod:: understat.Understat.get_team_fixtures
 
+It returns the upcoming fixtures (not results) of the given team, in the given
+season. So for example, the fixtures as seen in the screenshot below
+
+.. image:: https://i.imgur.com/0qZbE8a.png
+
+The function comes with the `options` keyword argument, and the `**kwargs`
+magic variable, and so that can be used to filter the output. This is similar
+to the `get_league_fixtures` function, but it makes certain options for
+filtering much easier. For example, if you, once again, wanted to get all
+Manchester United's upcoming fixtures at **home**, then instead of passing a
+dictionary as keyword argument, you could simply do the following
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            results = await understat.get_team_fixtures(
+                "Manchester United",
+                2018,
+                side="h"
+            )
+            print(json.dumps(results))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs (with parts omitted)
+
+.. code-block:: javascript
+
+    [
+        {
+            "id": "9501",
+            "isResult": false,
+            "side": "h",
+            "h": {
+                "id": "89",
+                "title": "Manchester United",
+                "short_title": "MUN"
+            },
+            "a": {
+                "id": "88",
+                "title": "Manchester City",
+                "short_title": "MCI"
+            },
+            "goals": {
+                "h": null,
+                "a": null
+            },
+            "xG": {
+                "h": null,
+                "a": null
+            },
+            "datetime": "2019-03-16 18:00:00"
+        },
+        ...,
+        {
+            "id": "9570",
+            "isResult": false,
+            "side": "h",
+            "h": {
+                "id": "89",
+                "title": "Manchester United",
+                "short_title": "MUN"
+            },
+            "a": {
+                "id": "227",
+                "title": "Cardiff",
+                "short_title": "CAR"
+            },
+            "goals": {
+                "h": null,
+                "a": null
+            },
+            "xG": {
+                "h": null,
+                "a": null
+            },
+            "datetime": "2019-05-12 17:00:00"
+        }
+    ]
+
 ---
 
 .. automethod:: understat.Understat.get_team_players
