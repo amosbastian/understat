@@ -1253,3 +1253,96 @@ which outputs (with parts omitted)
 
 .. automethod:: understat.Understat.get_teams
 
+It returns all the information for the teams in a given league. Basically it is
+all the information that is shown in the league's table, as shown in the
+screenshot below
+
+.. image:: https://i.imgur.com/tQO7cnO.png
+
+The function comes with the `options` keyword argument, and the `**kwargs`
+magic variable, and so that can be used to filter the output. So for example,
+if you wanted to get Manchester United's stats (as shown in the table), you
+could do the following
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            teams = await understat.get_teams(
+                "epl",
+                2018,
+                title="Manchester United"
+            )
+            print(json.dumps(teams))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs (with parts omitted)
+
+.. code-block:: javascript
+
+    [
+        {
+            "id": "89",
+            "title": "Manchester United",
+            "history": [
+                {
+                    "h_a": "h",
+                    "xG": 1.5137,
+                    "xGA": 1.73813,
+                    "npxG": 0.75253,
+                    "npxGA": 1.73813,
+                    "ppda": {
+                    "att": 285,
+                    "def": 18
+                    },
+                    "ppda_allowed": {
+                    "att": 298,
+                    "def": 26
+                    },
+                    "deep": 3,
+                    "deep_allowed": 10,
+                    "scored": 2,
+                    "missed": 1,
+                    "xpts": 1.1711,
+                    "result": "w",
+                    "date": "2018-08-10 22:00:00",
+                    "wins": 1,
+                    "draws": 0,
+                    "loses": 0,
+                    "pts": 3,
+                    "npxGD": -0.9856
+                },
+                ...,
+                {
+                    "h_a": "a",
+                    "xG": 2.3703,
+                    "xGA": 1.52723,
+                    "npxG": 2.3703,
+                    "npxGA": 0.766059,
+                    "ppda": {
+                    "att": 203,
+                    "def": 25
+                    },
+                    "ppda_allowed": {
+                    "att": 271,
+                    "def": 21
+                    },
+                    "deep": 7,
+                    "deep_allowed": 9,
+                    "scored": 0,
+                    "missed": 2,
+                    "xpts": 2.0459,
+                    "result": "l",
+                    "date": "2019-03-10 16:30:00",
+                    "wins": 0,
+                    "draws": 0,
+                    "loses": 1,
+                    "pts": 0,
+                    "npxGD": 1.604241
+                }
+            ]
+        }
+    ]
