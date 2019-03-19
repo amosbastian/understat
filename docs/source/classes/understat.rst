@@ -1035,6 +1035,113 @@ which outputs
 
 ---
 
+.. automethod:: understat.Understat.get_team_fixtures
+
+---
+
+.. automethod:: understat.Understat.get_team_players
+
+---
+
+.. automethod:: understat.Understat.get_team_results
+
+It returns the results (not fixtures) of the given team, in the given season.
+So for example, the fixtures as seen in the screenshot below
+
+.. image:: https://i.imgur.com/Q9KC5f9.png
+
+The function comes with the `options` keyword argument, and the `**kwargs`
+magic variable, and so that can be used to filter the output. This is similar
+to the `get_results` function, but it makes certain options for filtering much
+easier. For example, if you, once again, wanted to get all Manchester United's
+results at **home**, then instead of passing a dictionary as keyword argument,
+you could simply do the following
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            results = await understat.get_team_results(\
+                "Manchester United",
+                2018,
+                side="h"
+            )
+            print(json.dumps(results))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs (with parts omitted)
+
+.. code-block:: javascript
+
+    [
+        {
+            "id": "9197",
+            "isResult": true,
+            "side": "h",
+            "h": {
+                "id": "89",
+                "title": "Manchester United",
+                "short_title": "MUN"
+            },
+            "a": {
+                "id": "75",
+                "title": "Leicester",
+                "short_title": "LEI"
+            },
+            "goals": {
+                "h": "2",
+                "a": "1"
+            },
+            "xG": {
+                "h": "1.5137",
+                "a": "1.73813"
+            },
+            "datetime": "2018-08-10 22:00:00",
+            "forecast": {
+                "w": 0.33715468577027,
+                "d": 0.23067469101496,
+                "l": 0.43217062251974
+            },
+            "result": "w"
+        },
+        ...,
+        {
+            "id": "9226",
+            "isResult": true,
+            "side": "h",
+            "h": {
+                "id": "89",
+                "title": "Manchester United",
+                "short_title": "MUN"
+            },
+            "a": {
+                "id": "82",
+                "title": "Tottenham",
+                "short_title": "TOT"
+            },
+            "goals": {
+                "h": "0",
+                "a": "3"
+            },
+            "xG": {
+                "h": "1.40321",
+                "a": "1.80811"
+            },
+            "datetime": "2018-08-27 22:00:00",
+            "forecast": {
+                "w": 0.29970781519619,
+                "d": 0.22891929318443,
+                "l": 0.47137289056693
+            },
+            "result": "l"
+        }
+    ]
+
+---
+
 .. automethod:: understat.Understat.get_team_stats
 
 It returns all the statistics of a given team, which includes stuff like
@@ -1253,9 +1360,9 @@ which outputs (with parts omitted)
 
 .. automethod:: understat.Understat.get_teams
 
-It returns all the information for the teams in a given league. Basically it is
-all the information that is shown in the league's table, as shown in the
-screenshot below
+It returns all the information for the teams in a given league, in a given
+season. Basically it is all the information that is shown in the league's
+table, as shown in the screenshot below
 
 .. image:: https://i.imgur.com/tQO7cnO.png
 
