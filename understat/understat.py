@@ -238,3 +238,28 @@ class Understat():
         filtered_data = filter_data(results, kwargs)
 
         return filtered_data
+
+    async def get_team_fixtures(
+            self, team_name, season, options=None, **kwargs):
+        """Returns a team's upcoming fixtures in the given season.
+
+        :param team_name: A team's name.
+        :type team_name: str
+        :param season: The season.
+        :type season: int or str
+        :param options: Options to filter the data by, defaults to None.
+        :param options: dict, optional
+        :return: List of the team's upcoming fixtures in the given season.
+        :rtype: list
+        """
+
+        url = TEAM_URL.format(team_name.replace(" ", "_"), season)
+        dates_data = await get_data(self.session, url, "datesData")
+        fixtures = [f for f in dates_data if not f["isResult"]]
+
+        if options:
+            kwargs = options
+
+        filtered_data = filter_data(fixtures, kwargs)
+
+        return filtered_data
