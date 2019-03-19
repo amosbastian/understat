@@ -10,6 +10,8 @@
         <img src="https://badge.fury.io/py/understat.svg"/></a>
     <a href="https://pypi.org/project/understat/" alt="Python version">
         <img src="https://img.shields.io/badge/Python-3.6%2B-blue.svg"/></a>
+    <a href="https://understat.readthedocs.io/en/latest/" alt="Documentation">
+        <img src="https://readthedocs.org/projects/understat/badge/?version=latest&style=flat"></a>
 </p>
 
 ## Installing understat
@@ -72,4 +74,4 @@ An example of using `Understat` can be found below:
 
 ## Documentation
 
-Coming soon!
+Documentation and examples for **understat** can be found at http://understat.readthedocs.io/en/latest/.
