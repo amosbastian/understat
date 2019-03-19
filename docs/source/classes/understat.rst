@@ -41,6 +41,18 @@ be documented separately. It will also show a screenshot of the equivalent data
 on `understat.com <https://understat.com>`_, and an example of how the function
 itself could be used.
 
+Most of the functions come with the `options` keyword argument, and the
+`**kwargs` magic variable, which means that their output can be filtered
+(the ways this can be done depends entirely on the output). It was the easiest
+way to implement something like this, but may not always be optimal (e.g. 
+filtering by home team may require an object for example), and so this could be
+changed in the future.
+
+If you have any suggestions on what kind of filtering
+options you'd like to see for certain functions, then you can create an
+`issue <https://github.com/amosbastian/understat/issues>`_ for this. Also, any
+help with adding better filtering, if necessary, is also very much appreciated!
+
 ---
 
 .. automethod:: understat.Understat.get_fixtures
