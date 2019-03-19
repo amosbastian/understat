@@ -935,9 +935,91 @@ which outputs (with parts omitted)
 
 ---
 
+.. automethod:: understat.Understat.get_stats
+
+It returns the average stats of all the leagues tracked on
+`understat.com <https://understat.com>`_, split by month. Basically, it is all
+the information you see on their homepage, as seen in the screenshot below
+
 .. image:: https://i.imgur.com/5rf0ACo.png
 
-.. automethod:: understat.Understat.get_stats
+The function comes with the `options` keyword argument, and the `**kwargs`
+magic variable, and so that can be used to filter the output. So for example,
+if you wanted to gets the stats for the Premier League in the 8th month of each
+year they have been tracking the stats, then you could do the following
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            stats = await understat.get_stats({"league": "EPL", "month": "8"})
+            print(json.dumps(stats))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs
+
+.. code-block:: javascript
+
+    [
+        {
+            "league_id": "1",
+            "league": "EPL",
+            "h": "1.3000",
+            "a": "1.4000",
+            "hxg": "1.141921697060267",
+            "axg": "1.110964298248291",
+            "year": "2014",
+            "month": "8",
+            "matches": "30"
+        },
+        {
+            "league_id": "1",
+            "league": "EPL",
+            "h": "1.1000",
+            "a": "1.3750",
+            "hxg": "1.2151590750552714",
+            "axg": "1.221375621855259",
+            "year": "2015",
+            "month": "8",
+            "matches": "40"
+        },
+        {
+            "league_id": "1",
+            "league": "EPL",
+            "h": "1.2000",
+            "a": "1.2000",
+            "hxg": "1.3605596815546355",
+            "axg": "1.145853524406751",
+            "year": "2016",
+            "month": "8",
+            "matches": "30"
+        },
+        {
+            "league_id": "1",
+            "league": "EPL",
+            "h": "1.3000",
+            "a": "1.1333",
+            "hxg": "1.4422248949607213",
+            "axg": "1.096401752779881",
+            "year": "2017",
+            "month": "8",
+            "matches": "30"
+        },
+        {
+            "league_id": "1",
+            "league": "EPL",
+            "h": "1.6333",
+            "a": "1.3333",
+            "hxg": "1.453833992779255",
+            "axg": "1.4325587471326193",
+            "year": "2018",
+            "month": "8",
+            "matches": "30"
+        }
+    ]
 
 ---
 
