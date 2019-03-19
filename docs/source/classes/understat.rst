@@ -689,6 +689,77 @@ which outputs (with parts omitted)
 
 .. automethod:: understat.Understat.get_player_stats
 
+It returns the player's average stats overall, which includes stuff like their
+average goals per 90 minutes, average expected assists per 90 minutes and more.
+Basically everything you can see on a player's page in the section shown below
+
+.. image:: https://i.imgur.com/uJ2o0zi.png
+
+The function comes with the `positions` argument, which can be used to filter 
+the stats by position(s). So for example, if you wanted to get Sergio Agüero's
+performance as a forward, then you could do the following
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            player_stats = await understat.get_player_stats(619, ["FW"])
+            print(json.dumps(player_stats))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs
+
+.. code-block:: javascript
+
+    [
+        {
+            "goals": {
+            "min": 0.0011,
+            "max": 0.0126,
+            "avg": 0.0042
+            },
+            "xG": {
+            "min": 0.00172821,
+            "max": 0.0120816,
+            "avg": 0.00415549
+            },
+            "shots": {
+            "min": 0.015,
+            "max": 0.0737,
+            "avg": 0.028
+            },
+            "assists": {
+            "min": 0,
+            "max": 0.0048,
+            "avg": 0.0014
+            },
+            "xA": {
+            "min": 0.000264191,
+            "max": 0.00538174,
+            "avg": 0.00131568
+            },
+            "key_passes": {
+            "min": 0.0036,
+            "max": 0.0309,
+            "avg": 0.012
+            },
+            "xGChain": {
+            "min": 0.00272705,
+            "max": 0.0169137,
+            "avg": 0.00533791
+            },
+            "xGBuildup": {
+            "min": 0.000243189,
+            "max": 0.00671256,
+            "avg": 0.00131848
+            },
+            "position": "FW"
+        }
+    ]
+
 ---
 
 .. automethod:: understat.Understat.get_players
