@@ -13,7 +13,7 @@ The recommended way to install ``understat`` is via ``pip``.
           packages for Python 3.
 
 Updating **understat** with pip
--------------------------
+-------------------------------
 
 To update **understat** you can run:
 
