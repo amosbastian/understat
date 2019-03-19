@@ -95,22 +95,22 @@ which outputs (with parts omitted)
             "id": "9501",
             "isResult": false,
             "h": {
-            "id": "89",
-            "title": "Manchester United",
-            "short_title": "MUN"
+                "id": "89",
+                "title": "Manchester United",
+                "short_title": "MUN"
             },
             "a": {
-            "id": "88",
-            "title": "Manchester City",
-            "short_title": "MCI"
+                "id": "88",
+                "title": "Manchester City",
+                "short_title": "MCI"
             },
             "goals": {
-            "h": null,
-            "a": null
+                "h": null,
+                "a": null
             },
             "xG": {
-            "h": null,
-            "a": null
+                "h": null,
+                "a": null
             },
             "datetime": "2019-03-16 18:00:00"
         },
@@ -568,8 +568,8 @@ example, the matches Sergio Agüero has played, as seen in the screenshot
 
 .. image:: https://i.imgur.com/dE54ox0.png
 
-This function, as many other functions, also comes with the `options` keyword
-argument, and also the `**kwargs` magic variable. An example of how you could
+This function also comes with the `options` keyword argument, and also the
+`**kwargs` magic variable. An example of how you could
 use either of these to filter Sergio Agüero's matches to only include matches
 where Manchester United were the home team is shown below
 
@@ -619,7 +619,8 @@ which outputs
     ]
 
 Since the usage of both the `options` keyword argument and the `**kwargs` magic
-variable have been shown, the examples will only use *one* of these from now on.
+variable have been shown, the examples following this will only show *one* of 
+the two.
 
 ---
 
