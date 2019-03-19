@@ -1,5 +1,5 @@
-A Python wrapper for the Fantasy Premier League API
-===================================================
+A Python package for Understat_
+=========================================================
 
 .. image:: https://api.codacy.com/project/badge/Grade/716b2c24086a41d7a79481ac89748861
     :target: https://www.codacy.com/app/amosbastian/understat?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=amosbastian/understat&amp;utm_campaign=Badge_Grade
@@ -17,7 +17,11 @@ A Python wrapper for the Fantasy Premier League API
     :target: https://pypi.org/project/understat/
 
 
-.. note:: The latest version of **understat** is asynchronous, and requires Python 3.6+!
+.. note:: I have nothing to do with Understat, and have simply created this
+    package for fun!
+
+.. note:: The latest version of **understat** is asynchronous, and requires
+    Python 3.6+!
 
 If you're interested in helping out the development of **understat**, or have
 suggestions and ideas then please don't hesitate to create an issue on GitHub,
@@ -52,8 +56,7 @@ join our `Discord server <https://discord.gg/cjY37fv>`_ or send an email to
     >>>[{"id": "1740", "player_name": "Paul Pogba", "games": "27", "time": "2293", "goals": "11", "xG": "13.361832823604345", "assists": "9", "xA": "4.063152700662613", "shots": "87", "key_passes": "40", "yellow_cards": "5", "red_cards": "0", "position": "M S", "team_title": "Manchester United", "npg": "6", "npxG": "7.272482139989734", "xGChain": "17.388037759810686", "xGBuildup": "8.965998269617558"}]
 
 
-With **understat** you can easily get all the data available on `understat.com
-<https://understat.com/>`_!
+With **understat** you can easily get all the data available on Understat_!
 
 The User Guide
 --------------
@@ -71,7 +74,7 @@ The Class Documentation / Guide
 This part of the documentation is for people who want or need more information
 bout specific functions and classes found in **understat**. It includes example
 output for each of the functions, and also screenshots showing where you would
-find the equivalent data on `understat.com <https://understat.com>`_.
+find the equivalent data on Understat_.
 
 .. toctree::
    :maxdepth: 2
@@ -91,3 +94,5 @@ is for you!
 
    contributing/contributing
    contributing/authors
+
+.. _Understat: https://understat.com
