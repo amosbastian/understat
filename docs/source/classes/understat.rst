@@ -52,8 +52,8 @@ So for example, the fixtures as seen in the screenshot below
 
 The function comes with the `options` keyword argument, and the `**kwargs`
 magic variable, and so that can be used to filter the output.
-So for example, if you wanted to get all Manchester United's upcoming fixtures,
-then you could do the following
+So for example, if you wanted to get all Manchester United's upcoming fixtures
+at **home**, then you could do the following
 
 .. code-block:: python
 
@@ -62,8 +62,8 @@ then you could do the following
             understat = Understat(session)
             fixtures = await understat.get_fixtures("epl", 2018, {
                 "h": {"id": "89",
-                    "title": "Manchester United",
-                    "short_title": "MUN"}
+                      "title": "Manchester United",
+                      "short_title": "MUN"}
             })
             print(json.dumps(fixtures))
 
@@ -843,6 +843,95 @@ which outputs (with parts omitted)
 ---
 
 .. automethod:: understat.Understat.get_results
+
+It returns the results (not fixtures) of the given league, in the given season.
+So for example, the results as seen in the screenshot below
+
+.. image:: https://i.imgur.com/LyWGAJw.png
+
+The function comes with the `options` keyword argument, and the `**kwargs`
+magic variable, and so that can be used to filter the output. So for example,
+if you wanted to get all Manchester United's results away from home, then you
+could do the following
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            fixtures = await understat.get_results("epl", 2018, {
+                "a": {"id": "89",
+                      "title": "Manchester United",
+                      "short_title": "MUN"}
+            })
+            print(json.dumps(fixtures))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs (with parts omitted)
+
+.. code-block:: javascript
+
+    [
+        {
+            "id": "9215",
+            "isResult": true,
+            "h": {
+                "id": "220",
+                "title": "Brighton",
+                "short_title": "BRI"
+            },
+            "a": {
+                "id": "89",
+                "title": "Manchester United",
+                "short_title": "MUN"
+            },
+            "goals": {
+                "h": "3",
+                "a": "2"
+            },
+            "xG": {
+                "h": "1.63672",
+                "a": "1.56579"
+            },
+            "datetime": "2018-08-19 18:00:00",
+            "forecast": {
+                "w": "0.3538",
+                "d": "0.3473",
+                "l": "0.2989"
+            }
+        },
+        ...,
+        {
+            "id": "9496",
+            "isResult": true,
+            "h": {
+                "id": "83",
+                "title": "Arsenal",
+                "short_title": "ARS"
+            },
+            "a": {
+                "id": "89",
+                "title": "Manchester United",
+                "short_title": "MUN"
+            },
+            "goals": {
+                "h": "2",
+                "a": "0"
+            },
+            "xG": {
+                "h": "1.52723",
+                "a": "2.3703"
+            },
+            "datetime": "2019-03-10 16:30:00",
+            "forecast": {
+                "w": "0.1667",
+                "d": "0.227",
+                "l": "0.6063"
+            }
+        }
+    ]
 
 ---
 
