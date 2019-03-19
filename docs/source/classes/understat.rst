@@ -1025,6 +1025,218 @@ which outputs
 
 .. automethod:: understat.Understat.get_team_stats
 
+It returns all the statistics of a given team, which includes stuff like
+their performance per season, formation and more. Basically, it's everything
+that can be found in the table shown in the screenshot below
+
+.. image:: https://i.imgur.com/RlWzExr.png
+
+An example of getting Manchester United's data can be found below
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            team_stats = await understat.get_team_stats("Manchester United", 2018)
+            print(json.dumps(team_stats))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs (with parts omitted)
+
+.. code-block:: javascript
+
+{
+  "situation": {
+    "OpenPlay": {
+      "shots": 297,
+      "goals": 39,
+      "xG": 36.671056651045,
+      "against": {
+        "shots": 279,
+        "goals": 25,
+        "xG": 28.870285989717
+      }
+    },
+    ...,
+    "Penalty": {
+      "shots": 10,
+      "goals": 7,
+      "xG": 7.611688375473,
+      "against": {
+        "shots": 5,
+        "goals": 5,
+        "xG": 3.8058441877365
+      }
+    }
+  },
+  "formation": {
+    "4-3-3": {
+      "stat": "4-3-3",
+      "time": 1295,
+      "shots": 185,
+      "goals": 30,
+      "xG": 27.7899469533,
+      "against": {
+        "shots": 176,
+        "goals": 18,
+        "xG": 20.478145442903
+      }
+    },
+    ...,
+    "4-4-2": {
+      "stat": "4-4-2",
+      "time": 38,
+      "shots": 8,
+      "goals": 0,
+      "xG": 0.87938431277871,
+      "against": {
+        "shots": 11,
+        "goals": 1,
+        "xG": 0.66449437476695
+      }
+    }
+  },
+  "gameState": {
+    "Goal diff 0": {
+      "stat": "Goal diff 0",
+      "time": 1284,
+      "shots": 154,
+      "goals": 20,
+      "xG": 20.433959940448,
+      "against": {
+        "shots": 170,
+        "goals": 15,
+        "xG": 17.543024708517
+      }
+    },
+    ...,
+    "Goal diff < -1": {
+      "stat": "Goal diff < -1",
+      "time": 253,
+      "shots": 43,
+      "goals": 7,
+      "xG": 6.4928285568021,
+      "against": {
+        "shots": 21,
+        "goals": 1,
+        "xG": 2.9283153852448
+      }
+    }
+  },
+  "timing": {
+    "1-15": {
+      "stat": "1-15",
+      "shots": 51,
+      "goals": 6,
+      "xG": 7.2566251829267,
+      "against": {
+        "shots": 72,
+        "goals": 7,
+        "xG": 8.5656435946003
+      }
+    },
+    ...,
+    "76+": {
+      "stat": "76+",
+      "shots": 70,
+      "goals": 12,
+      "xG": 10.272770666517,
+      "against": {
+        "shots": 77,
+        "goals": 8,
+        "xG": 10.18940022774
+      }
+    }
+  },
+  "shotZone": {
+    "ownGoals": {
+      "stat": "ownGoals",
+      "shots": 0,
+      "goals": 0,
+      "xG": 0,
+      "against": {
+        "shots": 2,
+        "goals": 2,
+        "xG": 2
+      }
+    },
+    "shotOboxTotal": {
+      "stat": "shotOboxTotal",
+      "shots": 158,
+      "goals": 8,
+      "xG": 4.8084309450351,
+      "against": {
+        "shots": 170,
+        "goals": 6,
+        "xG": 5.4022304248065
+      }
+    },
+    ...,
+    "shotSixYardBox": {
+      "stat": "shotSixYardBox",
+      "shots": 36,
+      "goals": 13,
+      "xG": 13.912872407585,
+      "against": {
+        "shots": 32,
+        "goals": 8,
+        "xG": 11.533062046394
+      }
+    }
+  },
+  "attackSpeed": {
+    "Normal": {
+      "stat": "Normal",
+      "shots": 258,
+      "goals": 34,
+      "xG": 30.690259062219,
+      "against": {
+        "shots": 230,
+        "goals": 18,
+        "xG": 23.094043077901
+      }
+    },
+    ...,
+    "Slow": {
+      "stat": "Slow",
+      "shots": 18,
+      "goals": 2,
+      "xG": 0.71848054975271,
+      "against": {
+        "shots": 26,
+        "goals": 5,
+        "xG": 2.9855494443327
+      }
+    }
+  },
+  "result": {
+    "MissedShots": {
+      "shots": 122,
+      "goals": 0,
+      "xG": 12.353983599227,
+      "against": {
+        "shots": 155,
+        "goals": 0,
+        "xG": 13.091518453322
+      }
+    },
+    ...,
+    "ShotOnPost": {
+      "shots": 4,
+      "goals": 0,
+      "xG": 0.81487018615007,
+      "against": {
+        "shots": 2,
+        "goals": 0,
+        "xG": 0.61989105120301
+      }
+    }
+  }
+}
+
 ---
 
 .. automethod:: understat.Understat.get_teams
