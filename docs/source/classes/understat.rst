@@ -609,6 +609,82 @@ variable have been shown, the examples will only use *one* of these from now on.
 
 .. automethod:: understat.Understat.get_player_shots
 
+It returns the given player's shot data, which includes information about the
+situation (open play, freekick etc.), if it hit the post or was a goal, and
+more. Basically, all the information that you can get from a player's page in
+the section shown below
+
+.. image:: https://i.imgur.com/t80WF5r.png
+
+The function comes with the `options` keyword argument, and the `**kwargs`
+magic variable, and so that can be used to filter the output. So for example,
+if you wanted to get all Sergio Agüero's shots (not necessarily goals) that
+were assisted by Fernandinho, then you could do the following
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            player_shots = await understat.get_player_shots(
+                619, {"player_assisted": "Fernandinho"})
+            print(json.dumps(player_shots))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs (with parts omitted)
+
+.. code-block:: javascript
+
+    [
+        {
+            "id": "14552",
+            "minute": "91",
+            "result": "SavedShot",
+            "X": "0.9259999847412109",
+            "Y": "0.6809999847412109",
+            "xG": "0.0791548416018486",
+            "player": "Sergio Ag\u00fcero",
+            "h_a": "a",
+            "player_id": "619",
+            "situation": "OpenPlay",
+            "season": "2014",
+            "shotType": "LeftFoot",
+            "match_id": "4757",
+            "h_team": "Newcastle United",
+            "a_team": "Manchester City",
+            "h_goals": "0",
+            "a_goals": "2",
+            "date": "2014-08-17 16:00:00",
+            "player_assisted": "Fernandinho",
+            "lastAction": "Pass"
+        },
+        ...,
+        {
+            "id": "233670",
+            "minute": "15",
+            "result": "MissedShots",
+            "X": "0.7419999694824219",
+            "Y": "0.5359999847412109",
+            "xG": "0.029104366898536682",
+            "player": "Sergio Ag\u00fcero",
+            "h_a": "h",
+            "player_id": "619",
+            "situation": "OpenPlay",
+            "season": "2018",
+            "shotType": "RightFoot",
+            "match_id": "9234",
+            "h_team": "Manchester City",
+            "a_team": "Newcastle United",
+            "h_goals": "2",
+            "a_goals": "1",
+            "date": "2018-09-01 16:30:00",
+            "player_assisted": "Fernandinho",
+            "lastAction": "Pass"
+        }
+    ]
+
 ---
 
 .. automethod:: understat.Understat.get_player_stats
