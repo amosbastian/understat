@@ -155,3 +155,16 @@ class TestUnderstat(object):
     async def test_get_team_stats(self, loop, understat):
         team_stats = await understat.get_team_stats("Manchester United", 2018)
         assert isinstance(team_stats, dict)
+
+    async def test_get_team_results(self, loop, understat):
+        results = await understat.get_team_results("Manchester United", 2018)
+        assert isinstance(results, list)
+
+    async def test_get_team_results_with_options(self, loop, understat):
+        results = await understat.get_team_results(
+            "Manchester United", 2018, side="h")
+        assert isinstance(results, list)
+
+        results = await understat.get_team_results(
+            "Manchester United", 2018, {"side": "h", "result": "w"})
+        assert isinstance(results, list)
