@@ -50,7 +50,10 @@ So for example, the fixtures as seen in the screenshot below
 
 .. image:: https://i.imgur.com/dE54ox0.png
 
-An example of getting all Manchester United's upcoming fixtures is given below
+The function comes with the `options` keyword argument, and the `**kwargs`
+magic variable, and so that can be used to filter the output.
+So for example, if you wanted to get all Manchester United's upcoming fixtures,
+then you could do the following
 
 .. code-block:: python
 
@@ -543,6 +546,64 @@ which outputs (with parts omitted)
 ---
 
 .. automethod:: understat.Understat.get_player_matches
+
+It returns the information about the matches played by the given player. So for
+example, the matches Sergio Agüero has played, as seen in the screenshot
+
+.. image:: https://i.imgur.com/dE54ox0.png
+
+This function, as many other functions, also comes with the `options` keyword
+argument, and also the `**kwargs` magic variable. An example of how you could
+use either of these to filter Sergio Agüero's matches to only include matches
+where Manchester United were the home team is shown below
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            # Using **kwargs
+            player_matches = await understat.get_player_matches(
+                619, h_team="Manchester United")
+            # Or using options keyword arugment
+            player_matches = await understat.get_player_matches(
+                619, {"h_team": "Manchester United"})
+            print(json.dumps(player_matches))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs
+
+.. code-block:: javascript
+
+    [
+        {
+            "goals": "2",
+            "shots": "5",
+            "xG": "1.4754852056503296",
+            "time": "90",
+            "position": "FW",
+            "h_team": "Manchester United",
+            "a_team": "Manchester City",
+            "h_goals": "4",
+            "a_goals": "2",
+            "date": "2015-04-12",
+            "id": "4459",
+            "season": "2014",
+            "roster_id": "23306",
+            "xA": "0",
+            "assists": "0",
+            "key_passes": "0",
+            "npg": "2",
+            "npxG": "1.4754852056503296",
+            "xGChain": "1.4855852127075195",
+            "xGBuildup": "0.04120262712240219"
+        }
+    ]
+
+Since the usage of both the `options` keyword argument and the `**kwargs` magic
+variable have been shown, the examples will only use *one* of these from now on.
 
 ---
 
