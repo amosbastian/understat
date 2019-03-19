@@ -213,3 +213,28 @@ class Understat():
         team_stats = await get_data(self.session, url, "statisticsData")
 
         return team_stats
+
+    async def get_team_results(
+            self, team_name, season, options=None, **kwargs):
+        """Returns a team's results in the given season.
+
+        :param team_name: A team's name.
+        :type team_name: str
+        :param season: The season.
+        :type season: int or str
+        :param options: Options to filter the data by, defaults to None.
+        :param options: dict, optional
+        :return: List of the team's results in the given season.
+        :rtype: list
+        """
+
+        url = TEAM_URL.format(team_name.replace(" ", "_"), season)
+        dates_data = await get_data(self.session, url, "datesData")
+        results = [r for r in dates_data if r["isResult"]]
+
+        if options:
+            kwargs = options
+
+        filtered_data = filter_data(results, kwargs)
+
+        return filtered_data
