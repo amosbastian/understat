@@ -43,40 +43,40 @@ class TestUnderstat(object):
         assert isinstance(team, list)
         assert not team
 
-    async def test_get_players(self, loop, understat):
+    async def test_get_league_players(self, loop, understat):
         for league in leagues:
-            players = await understat.get_players(league, 2018)
+            players = await understat.get_league_players(league, 2018)
             assert isinstance(players, list)
 
-    async def test_get_players_with_options(self, loop, understat):
-        player = await understat.get_players(
+    async def test_get_league_players_with_options(self, loop, understat):
+        player = await understat.get_league_players(
             "epl", 2018, player_name="Paul Pogba",
             team_title="Manchester United")
         assert isinstance(player, list)
         assert len(player) == 1
 
-        player = await understat.get_players(
+        player = await understat.get_league_players(
             "epl", 2018, {"position": "F S",
                           "yellow_cards": "3",
                           "player_name": "Sergio Agüero"})
         assert isinstance(player, list)
         assert len(player) == 1
 
-        player = await understat.get_players(
+        player = await understat.get_league_players(
             "epl", 2018, player_name="Lionel Messi")
         assert isinstance(player, list)
         assert not player
 
-    async def test_get_results(self, loop, understat):
+    async def test_get_league_results(self, loop, understat):
         for league in leagues:
-            results = await understat.get_results(league, 2018)
+            results = await understat.get_league_results(league, 2018)
             assert isinstance(results, list)
 
         for result in results:
             assert result["isResult"]
 
-    async def test_get_results_with_options(self, loop, understat):
-        results = await understat.get_results("epl", 2018, {
+    async def test_get_league_results_with_options(self, loop, understat):
+        results = await understat.get_league_results("epl", 2018, {
             "h": {"id": "89",
                   "title": "Manchester United",
                   "short_title": "MUN"}
@@ -84,22 +84,22 @@ class TestUnderstat(object):
         assert isinstance(results, list)
         assert len(results) > 0
 
-        results_without_option = await understat.get_results(
+        results_without_option = await understat.get_league_results(
             "epl", 2018, isResult=True)
-        results_with_option = await understat.get_results(
+        results_with_option = await understat.get_league_results(
             "epl", 2018, isResult=True)
         assert results_with_option == results_without_option
 
-    async def test_get_fixtures(self, loop, understat):
+    async def test_get_league_fixtures(self, loop, understat):
         for league in leagues:
-            fixtures = await understat.get_fixtures(league, 2018)
+            fixtures = await understat.get_league_fixtures(league, 2018)
             assert isinstance(fixtures, list)
 
         for fixture in fixtures:
             assert not fixture["isResult"]
 
-    async def test_get_fixtures_with_options(self, loop, understat):
-        results = await understat.get_fixtures("epl", 2018, {
+    async def test_get_league_fixtures_with_options(self, loop, understat):
+        results = await understat.get_league_fixtures("epl", 2018, {
             "h": {"id": "89",
                   "title": "Manchester United",
                   "short_title": "MUN"}
@@ -107,9 +107,9 @@ class TestUnderstat(object):
         assert isinstance(results, list)
         assert len(results) > 0
 
-        results_without_option = await understat.get_fixtures(
+        results_without_option = await understat.get_league_fixtures(
             "epl", 2018, isResult=True)
-        results_with_option = await understat.get_fixtures(
+        results_with_option = await understat.get_league_fixtures(
             "epl", 2018, isResult=True)
         assert results_with_option == results_without_option
 
@@ -151,3 +151,46 @@ class TestUnderstat(object):
     async def test_get_player_grouped_stats(self, loop, understat):
         grouped_stats = await understat.get_player_grouped_stats(619)
         assert isinstance(grouped_stats, dict)
+
+    async def test_get_team_stats(self, loop, understat):
+        team_stats = await understat.get_team_stats("Manchester United", 2018)
+        assert isinstance(team_stats, dict)
+
+    async def test_get_team_results(self, loop, understat):
+        results = await understat.get_team_results("Manchester United", 2018)
+        assert isinstance(results, list)
+
+    async def test_get_team_results_with_options(self, loop, understat):
+        results = await understat.get_team_results(
+            "Manchester United", 2018, side="h")
+        assert isinstance(results, list)
+
+        results = await understat.get_team_results(
+            "Manchester United", 2018, {"side": "h", "result": "w"})
+        assert isinstance(results, list)
+
+    async def test_get_team_fixtures(self, loop, understat):
+        fixtures = await understat.get_team_fixtures("Manchester United", 2018)
+        assert isinstance(fixtures, list)
+
+    async def test_get_team_fixtures_with_options(self, loop, understat):
+        fixtures = await understat.get_team_fixtures(
+            "Manchester United", 2018, side="h")
+        assert isinstance(fixtures, list)
+
+        fixtures = await understat.get_team_fixtures(
+            "Manchester United", 2018, {"side": "h", "result": "w"})
+        assert isinstance(fixtures, list)
+
+    async def test_get_team_players(self, loop, understat):
+        players = await understat.get_team_players("Manchester United", 2018)
+        assert isinstance(players, list)
+
+    async def test_get_team_players_with_options(self, loop, understat):
+        players = await understat.get_team_players(
+            "Manchester United", 2018, position="F S")
+        assert isinstance(players, list)
+
+        players = await understat.get_team_players(
+            "Manchester United", 2018, {"position": "F S", "red_cards": "0"})
+        assert isinstance(players, list)

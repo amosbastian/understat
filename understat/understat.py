@@ -1,4 +1,4 @@
-from understat.constants import BASE_URL, LEAGUE_URL, PLAYER_URL
+from understat.constants import BASE_URL, LEAGUE_URL, PLAYER_URL, TEAM_URL
 from understat.utils import (filter_by_positions, filter_data, get_data,
                              to_league_name)
 
@@ -50,7 +50,8 @@ class Understat():
 
         return filtered_data
 
-    async def get_players(self, league_name, season, options=None, **kwargs):
+    async def get_league_players(
+            self, league_name, season, options=None, **kwargs):
         """Returns a list containing information about all the players in
         the given league in the given season.
 
@@ -74,7 +75,8 @@ class Understat():
 
         return filtered_data
 
-    async def get_results(self, league_name, season, options=None, **kwargs):
+    async def get_league_results(
+            self, league_name, season, options=None, **kwargs):
         """Returns a list containing information about all the results
         (matches) played by the teams in the given league in the given season.
 
@@ -99,7 +101,8 @@ class Understat():
 
         return filtered_data
 
-    async def get_fixtures(self, league_name, season,  options=None, **kwargs):
+    async def get_league_fixtures(
+            self, league_name, season,  options=None, **kwargs):
         """Returns a list containing information about all the upcoming
         fixtures of the given league in the given season.
 
@@ -196,3 +199,94 @@ class Understat():
         player_stats = await get_data(self.session, url, "groupsData")
 
         return player_stats
+
+    async def get_team_stats(self, team_name, season):
+        """Returns a team's stats, as seen on their page on Understat, in the
+        given season.
+
+        :param team_name: A team's name, e.g. Manchester United.
+        :type team_name: str
+        :param season: A season / year, e.g. 2018.
+        :type season: int or str
+        :return: A dictionary containing a team's stats.
+        :rtype: dict
+        """
+
+        url = TEAM_URL.format(team_name.replace(" ", "_"), season)
+        team_stats = await get_data(self.session, url, "statisticsData")
+
+        return team_stats
+
+    async def get_team_results(
+            self, team_name, season, options=None, **kwargs):
+        """Returns a team's results in the given season.
+
+        :param team_name: A team's name.
+        :type team_name: str
+        :param season: The season.
+        :type season: int or str
+        :param options: Options to filter the data by, defaults to None.
+        :param options: dict, optional
+        :return: List of the team's results in the given season.
+        :rtype: list
+        """
+
+        url = TEAM_URL.format(team_name.replace(" ", "_"), season)
+        dates_data = await get_data(self.session, url, "datesData")
+        results = [r for r in dates_data if r["isResult"]]
+
+        if options:
+            kwargs = options
+
+        filtered_data = filter_data(results, kwargs)
+
+        return filtered_data
+
+    async def get_team_fixtures(
+            self, team_name, season, options=None, **kwargs):
+        """Returns a team's upcoming fixtures in the given season.
+
+        :param team_name: A team's name.
+        :type team_name: str
+        :param season: The season.
+        :type season: int or str
+        :param options: Options to filter the data by, defaults to None.
+        :param options: dict, optional
+        :return: List of the team's upcoming fixtures in the given season.
+        :rtype: list
+        """
+
+        url = TEAM_URL.format(team_name.replace(" ", "_"), season)
+        dates_data = await get_data(self.session, url, "datesData")
+        fixtures = [f for f in dates_data if not f["isResult"]]
+
+        if options:
+            kwargs = options
+
+        filtered_data = filter_data(fixtures, kwargs)
+
+        return filtered_data
+
+    async def get_team_players(
+            self, team_name, season, options=None, **kwargs):
+        """Returns a team's player statistics in the given season.
+
+        :param team_name: A team's name.
+        :type team_name: str
+        :param season: The season.
+        :type season: int or str
+        :param options: Options to filter the data by, defaults to None.
+        :param options: dict, optional
+        :return: List of the team's players' statistics in the given season.
+        :rtype: list
+        """
+
+        url = TEAM_URL.format(team_name.replace(" ", "_"), season)
+        players_data = await get_data(self.session, url, "playersData")
+
+        if options:
+            kwargs = options
+
+        filtered_data = filter_data(players_data, kwargs)
+
+        return filtered_data
