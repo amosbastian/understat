@@ -58,15 +58,12 @@ With **understat** you can easily get all the data available on `understat.com
 The User Guide
 --------------
 
-This part of the documentation is mostly an introduction on how to use
-**understat** and install it - including information for people newer to
-`asyncio`.
+This part of the documentation simply shows you have to install **understat**.
 
 .. toctree::
    :maxdepth: 2
 
    user/installation
-   user/quickstart
 
 The Class Documentation / Guide
 -------------------------------
