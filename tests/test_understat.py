@@ -67,16 +67,16 @@ class TestUnderstat(object):
         assert isinstance(player, list)
         assert not player
 
-    async def test_get_results(self, loop, understat):
+    async def test_get_league_results(self, loop, understat):
         for league in leagues:
-            results = await understat.get_results(league, 2018)
+            results = await understat.get_league_results(league, 2018)
             assert isinstance(results, list)
 
         for result in results:
             assert result["isResult"]
 
-    async def test_get_results_with_options(self, loop, understat):
-        results = await understat.get_results("epl", 2018, {
+    async def test_get_league_results_with_options(self, loop, understat):
+        results = await understat.get_league_results("epl", 2018, {
             "h": {"id": "89",
                   "title": "Manchester United",
                   "short_title": "MUN"}
@@ -84,9 +84,9 @@ class TestUnderstat(object):
         assert isinstance(results, list)
         assert len(results) > 0
 
-        results_without_option = await understat.get_results(
+        results_without_option = await understat.get_league_results(
             "epl", 2018, isResult=True)
-        results_with_option = await understat.get_results(
+        results_with_option = await understat.get_league_results(
             "epl", 2018, isResult=True)
         assert results_with_option == results_without_option
 

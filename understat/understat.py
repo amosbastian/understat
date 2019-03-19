@@ -75,7 +75,8 @@ class Understat():
 
         return filtered_data
 
-    async def get_results(self, league_name, season, options=None, **kwargs):
+    async def get_league_results(
+            self, league_name, season, options=None, **kwargs):
         """Returns a list containing information about all the results
         (matches) played by the teams in the given league in the given season.
 
@@ -262,5 +263,29 @@ class Understat():
             kwargs = options
 
         filtered_data = filter_data(fixtures, kwargs)
+
+        return filtered_data
+
+    async def get_team_players(
+            self, team_name, season, options=None, **kwargs):
+        """Returns a team's player statistics in the given season.
+
+        :param team_name: A team's name.
+        :type team_name: str
+        :param season: The season.
+        :type season: int or str
+        :param options: Options to filter the data by, defaults to None.
+        :param options: dict, optional
+        :return: List of the team's players' statistics in the given season.
+        :rtype: list
+        """
+
+        url = TEAM_URL.format(team_name.replace(" ", "_"), season)
+        players_data = await get_data(self.session, url, "playersData")
+
+        if options:
+            kwargs = options
+
+        filtered_data = filter_data(players_data, kwargs)
 
         return filtered_data
