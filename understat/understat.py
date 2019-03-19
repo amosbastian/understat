@@ -101,7 +101,8 @@ class Understat():
 
         return filtered_data
 
-    async def get_fixtures(self, league_name, season,  options=None, **kwargs):
+    async def get_league_fixtures(
+            self, league_name, season,  options=None, **kwargs):
         """Returns a list containing information about all the upcoming
         fixtures of the given league in the given season.
 

@@ -90,16 +90,16 @@ class TestUnderstat(object):
             "epl", 2018, isResult=True)
         assert results_with_option == results_without_option
 
-    async def test_get_fixtures(self, loop, understat):
+    async def test_get_league_fixtures(self, loop, understat):
         for league in leagues:
-            fixtures = await understat.get_fixtures(league, 2018)
+            fixtures = await understat.get_league_fixtures(league, 2018)
             assert isinstance(fixtures, list)
 
         for fixture in fixtures:
             assert not fixture["isResult"]
 
-    async def test_get_fixtures_with_options(self, loop, understat):
-        results = await understat.get_fixtures("epl", 2018, {
+    async def test_get_league_fixtures_with_options(self, loop, understat):
+        results = await understat.get_league_fixtures("epl", 2018, {
             "h": {"id": "89",
                   "title": "Manchester United",
                   "short_title": "MUN"}
@@ -107,9 +107,9 @@ class TestUnderstat(object):
         assert isinstance(results, list)
         assert len(results) > 0
 
-        results_without_option = await understat.get_fixtures(
+        results_without_option = await understat.get_league_fixtures(
             "epl", 2018, isResult=True)
-        results_with_option = await understat.get_fixtures(
+        results_with_option = await understat.get_league_fixtures(
             "epl", 2018, isResult=True)
         assert results_with_option == results_without_option
 
