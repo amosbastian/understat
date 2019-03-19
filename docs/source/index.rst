@@ -67,13 +67,14 @@ This part of the documentation is mostly an introduction on how to use
 
    user/installation
    user/quickstart
-   user/examples
 
 The Class Documentation / Guide
 -------------------------------
 
 This part of the documentation is for people who want or need more information
-bout specific functions and classes found in **understat**.
+bout specific functions and classes found in **understat**. It includes example
+output for each of the functions, and also screenshots showing where you would
+find the equivalent data on `understat.com <https://understat.com>`_.
 
 .. toctree::
    :maxdepth: 2
