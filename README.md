@@ -50,7 +50,7 @@ An example of using `Understat` can be found below:
     async def main():
         async with aiohttp.ClientSession() as session:
             understat = Understat(session)
-            data = await understat.get_players("epl", 2018, {"team_title": "Manchester United"})
+            data = await understat.get_league_players("epl", 2018, {"team_title": "Manchester United"})
             print(json.dumps(data))
 
 
