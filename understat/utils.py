@@ -21,7 +21,7 @@ def to_league_name(league_name):
 
 async def fetch(session, url):
     async with session.get(url) as response:
-        return await response.text(encoding='unicode-escape')
+        return await response.text(encoding='utf-8')
 
 
 async def get_data(session, url, data_type):
