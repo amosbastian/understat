@@ -28,7 +28,6 @@ setup(
     },
     install_requires=[
         "aiohttp",
-        "bs4",
         "codecov",
         "pytest-aiohttp",
         "pytest-cov",

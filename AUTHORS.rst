@@ -6,4 +6,4 @@ Maintainer
 Contributors
 ````````````
 
-- 
+- Rasool Somji `@rasoolsomji <https://github.com/rasoolsomji>`_,
