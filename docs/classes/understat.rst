@@ -44,7 +44,7 @@ itself could be used.
 Most of the functions come with the `options` keyword argument, and the
 `**kwargs` magic variable, which means that their output can be filtered
 (the ways this can be done depends entirely on the output). It was the easiest
-way to implement something like this, but may not always be optimal (e.g. 
+way to implement something like this, but may not always be optimal (e.g.
 filtering by home team may require an object for example), and so this could be
 changed in the future.
 
@@ -74,7 +74,7 @@ at **home**, then you could do the following
             understat = Understat(session)
             fixtures = await understat.get_league_fixtures(
                 "epl",
-                2018, 
+                2018,
                 {
                     "h": {"id": "89",
                           "title": "Manchester United",
@@ -619,7 +619,7 @@ which outputs
     ]
 
 Since the usage of both the `options` keyword argument and the `**kwargs` magic
-variable have been shown, the examples following this will only show *one* of 
+variable have been shown, the examples following this will only show *one* of
 the two.
 
 ---
@@ -712,7 +712,7 @@ Basically everything you can see on a player's page in the section shown below
 
 .. image:: https://i.imgur.com/uJ2o0zi.png
 
-The function comes with the `positions` argument, which can be used to filter 
+The function comes with the `positions` argument, which can be used to filter
 the stats by position(s). So for example, if you wanted to get Sergio Agüero's
 performance as a forward, then you could do the following
 
@@ -877,8 +877,8 @@ could do the following
         async with aiohttp.ClientSession() as session:
             understat = Understat(session)
             fixtures = await understat.get_league_results(
-                "epl", 
-                2018, 
+                "epl",
+                2018,
                 {
                     "a": {"id": "89",
                         "title": "Manchester United",
@@ -953,6 +953,258 @@ which outputs (with parts omitted)
             }
         }
     ]
+
+---
+
+.. automethod:: understat.Understat.get_match_players
+
+It returns information about the players who played in the given match.
+So for example, the players seen in the screenshot below
+
+.. image:: https://i.imgur.com/b7etgfp.png
+
+An example of getting the players who played in the match between Manchester
+United and Chelsea on 11 August, 2019 which ended 4-0 can be seen below:
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            players = await understat.get_match_players(11652)
+            print(json.dumps(players))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs (with parts omitted)
+
+.. code-block:: javascript
+
+    {
+        "h": {
+            "341628": {
+                "id": "341628",
+                "goals": "2",
+                "own_goals": "0",
+                "shots": "4",
+                "xG": "1.3030972480773926",
+                "time": "88",
+                "player_id": "556",
+                "team_id": "89",
+                "position": "AML",
+                "player": "Marcus Rashford",
+                "h_a": "h",
+                "yellow_card": "0",
+                "red_card": "0",
+                "roster_in": "341631",
+                "roster_out": "0",
+                "key_passes": "0",
+                "assists": "0",
+                "xA": "0",
+                "xGChain": "1.1517746448516846",
+                "xGBuildup": "0.6098462343215942",
+                "positionOrder": "13"
+            },
+            ...,
+            "341629": {
+                "id": "341629",
+                "goals": "1",
+                "own_goals": "0",
+                "shots": "4",
+                "xG": "0.7688590884208679",
+                "time": "90",
+                "player_id": "553",
+                "team_id": "89",
+                "position": "FW",
+                "player": "Anthony Martial",
+                "h_a": "h",
+                "yellow_card": "1",
+                "red_card": "0",
+                "roster_in": "0",
+                "roster_out": "0",
+                "key_passes": "1",
+                "assists": "0",
+                "xA": "0.05561231076717377",
+                "xGChain": "0.9395027160644531",
+                "xGBuildup": "0.11503136157989502",
+                "positionOrder": "15"
+            }
+        },
+        "a": {
+            "341633": {
+                "id": "341633",
+                "goals": "0",
+                "own_goals": "0",
+                "shots": "0",
+                "xG": "0",
+                "time": "90",
+                "player_id": "5061",
+                "team_id": "80",
+                "position": "GK",
+                "player": "Kepa",
+                "h_a": "a",
+                "yellow_card": "0",
+                "red_card": "0",
+                "roster_in": "0",
+                "roster_out": "0",
+                "key_passes": "0",
+                "assists": "0",
+                "xA": "0",
+                "xGChain": "0.04707280918955803",
+                "xGBuildup": "0.04707280918955803",
+                "positionOrder": "1"
+            },
+            ...,
+            "341642": {
+                "id": "341642",
+                "goals": "0",
+                "own_goals": "0",
+                "shots": "2",
+                "xG": "0.08609434962272644",
+                "time": "60",
+                "player_id": "592",
+                "team_id": "80",
+                "position": "AML",
+                "player": "Ross Barkley",
+                "h_a": "a",
+                "yellow_card": "0",
+                "red_card": "0",
+                "roster_in": "341646",
+                "roster_out": "0",
+                "key_passes": "1",
+                "assists": "0",
+                "xA": "0.024473881348967552",
+                "xGChain": "0.11056823283433914",
+                "xGBuildup": "0",
+                "positionOrder": "13"
+            }
+        }
+    }
+
+---
+
+.. automethod:: understat.Understat.get_match_shots
+
+It returns information about the shots made by players who played in the given
+match. So for example, the shots seen in the screenshot below
+
+.. image:: https://i.imgur.com/3z5wkAV.png
+
+An example of getting the shots made in the match between Manchester United and
+Chelsea on 11 August, 2019 which ended 4-0 can be seen below:
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            players = await understat.get_match_shots(11652)
+            print(json.dumps(players))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs (with parts omitted)
+
+.. code-block:: javascript
+
+    {
+        "h": [
+            {
+                "id": "310295",
+                "minute": "6",
+                "result": "SavedShot",
+                "X": "0.8280000305175781",
+                "Y": "0.639000015258789",
+                "xG": "0.04247729107737541",
+                "player": "Anthony Martial",
+                "h_a": "h",
+                "player_id": "553",
+                "situation": "OpenPlay",
+                "season": "2019",
+                "shotType": "RightFoot",
+                "match_id": "11652",
+                "h_team": "Manchester United",
+                "a_team": "Chelsea",
+                "h_goals": "4",
+                "a_goals": "0",
+                "date": "2019-08-11 16:30:00",
+                "player_assisted": null,
+                "lastAction": "None"
+            },
+            ...,
+            {
+                "id": "310318",
+                "minute": "86",
+                "result": "BlockedShot",
+                "X": "0.8669999694824219",
+                "Y": "0.47299999237060547",
+                "xG": "0.11503136157989502",
+                "player": "Mason Greenwood",
+                "h_a": "h",
+                "player_id": "7490",
+                "situation": "OpenPlay",
+                "season": "2019",
+                "shotType": "RightFoot",
+                "match_id": "11652",
+                "h_team": "Manchester United",
+                "a_team": "Chelsea",
+                "h_goals": "4",
+                "a_goals": "0",
+                "date": "2019-08-11 16:30:00",
+                "player_assisted": "Aaron Wan-Bissaka",
+                "lastAction": "Cross"
+            }
+        ],
+        "a": [
+            {
+                "id": "310293",
+                "minute": "3",
+                "result": "ShotOnPost",
+                "X": "0.835999984741211",
+                "Y": "0.38599998474121094",
+                "xG": "0.03392893448472023",
+                "player": "Tammy Abraham",
+                "h_a": "a",
+                "player_id": "702",
+                "situation": "FromCorner",
+                "season": "2019",
+                "shotType": "RightFoot",
+                "match_id": "11652",
+                "h_team": "Manchester United",
+                "a_team": "Chelsea",
+                "h_goals": "4",
+                "a_goals": "0",
+                "date": "2019-08-11 16:30:00",
+                "player_assisted": "Mateo Kovacic",
+                "lastAction": "BallTouch"
+            },
+            ...,
+            {
+                "id": "310321",
+                "minute": "93",
+                "result": "SavedShot",
+                "X": "0.850999984741211",
+                "Y": "0.7",
+                "xG": "0.043492574244737625",
+                "player": "Emerson",
+                "h_a": "a",
+                "player_id": "1245",
+                "situation": "OpenPlay",
+                "season": "2019",
+                "shotType": "LeftFoot",
+                "match_id": "11652",
+                "h_team": "Manchester United",
+                "a_team": "Chelsea",
+                "h_goals": "4",
+                "a_goals": "0",
+                "date": "2019-08-11 16:30:00",
+                "player_assisted": "Christian Pulisic",
+                "lastAction": "Pass"
+            }
+        ]
+    }
 
 ---
 
