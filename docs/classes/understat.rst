@@ -1084,6 +1084,130 @@ which outputs (with parts omitted)
 
 ---
 
+.. automethod:: understat.Understat.get_match_shots
+
+It returns information about the shots made by players who played in the given
+match. So for example, the shots seen in the screenshot below
+
+.. image:: https://i.imgur.com/3z5wkAV.png
+
+An example of getting the shots made in the match between Manchester United and
+Chelsea on 11 August, 2019 which ended 4-0 can be seen below:
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            players = await understat.get_match_shots(11652)
+            print(json.dumps(players))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs (with parts omitted)
+
+.. code-block:: javascript
+
+    {
+        "h": [
+            {
+                "id": "310295",
+                "minute": "6",
+                "result": "SavedShot",
+                "X": "0.8280000305175781",
+                "Y": "0.639000015258789",
+                "xG": "0.04247729107737541",
+                "player": "Anthony Martial",
+                "h_a": "h",
+                "player_id": "553",
+                "situation": "OpenPlay",
+                "season": "2019",
+                "shotType": "RightFoot",
+                "match_id": "11652",
+                "h_team": "Manchester United",
+                "a_team": "Chelsea",
+                "h_goals": "4",
+                "a_goals": "0",
+                "date": "2019-08-11 16:30:00",
+                "player_assisted": null,
+                "lastAction": "None"
+            },
+            ...,
+            {
+                "id": "310318",
+                "minute": "86",
+                "result": "BlockedShot",
+                "X": "0.8669999694824219",
+                "Y": "0.47299999237060547",
+                "xG": "0.11503136157989502",
+                "player": "Mason Greenwood",
+                "h_a": "h",
+                "player_id": "7490",
+                "situation": "OpenPlay",
+                "season": "2019",
+                "shotType": "RightFoot",
+                "match_id": "11652",
+                "h_team": "Manchester United",
+                "a_team": "Chelsea",
+                "h_goals": "4",
+                "a_goals": "0",
+                "date": "2019-08-11 16:30:00",
+                "player_assisted": "Aaron Wan-Bissaka",
+                "lastAction": "Cross"
+            }
+        ],
+        "a": [
+            {
+                "id": "310293",
+                "minute": "3",
+                "result": "ShotOnPost",
+                "X": "0.835999984741211",
+                "Y": "0.38599998474121094",
+                "xG": "0.03392893448472023",
+                "player": "Tammy Abraham",
+                "h_a": "a",
+                "player_id": "702",
+                "situation": "FromCorner",
+                "season": "2019",
+                "shotType": "RightFoot",
+                "match_id": "11652",
+                "h_team": "Manchester United",
+                "a_team": "Chelsea",
+                "h_goals": "4",
+                "a_goals": "0",
+                "date": "2019-08-11 16:30:00",
+                "player_assisted": "Mateo Kovacic",
+                "lastAction": "BallTouch"
+            },
+            ...,
+            {
+                "id": "310321",
+                "minute": "93",
+                "result": "SavedShot",
+                "X": "0.850999984741211",
+                "Y": "0.7",
+                "xG": "0.043492574244737625",
+                "player": "Emerson",
+                "h_a": "a",
+                "player_id": "1245",
+                "situation": "OpenPlay",
+                "season": "2019",
+                "shotType": "LeftFoot",
+                "match_id": "11652",
+                "h_team": "Manchester United",
+                "a_team": "Chelsea",
+                "h_goals": "4",
+                "a_goals": "0",
+                "date": "2019-08-11 16:30:00",
+                "player_assisted": "Christian Pulisic",
+                "lastAction": "Pass"
+            }
+        ]
+    }
+
+---
+
 .. automethod:: understat.Understat.get_stats
 
 It returns the average stats of all the leagues tracked on
