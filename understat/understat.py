@@ -293,7 +293,8 @@ class Understat():
         return filtered_data
 
     async def get_match_players(self, match_id, options=None, **kwargs):
-        """Returns a team's player statistics in the given season.
+        """Returns a dictionary containing information about the players who
+        played in the given match.
 
         :param fixture_id: A match's ID.
         :type fixture_id: int
@@ -306,6 +307,29 @@ class Understat():
 
         url = MATCH_URL.format(match_id)
         players_data = await get_data(self.session, url, "rostersData")
+
+        if options:
+            kwargs = options
+
+        filtered_data = filter_data(players_data, kwargs)
+
+        return filtered_data
+
+    async def get_match_shots(self, match_id, options=None, **kwargs):
+        """Returns a dictionary containing information about shots taken by
+        the players in the given match.
+
+        :param fixture_id: A match's ID.
+        :type fixture_id: int
+        :param options: Options to filter the data by, defaults to None.
+        :param options: dict, optional
+        :return: Dictionary containing information about the players who played
+            in the match.
+        :rtype: dict
+        """
+
+        url = MATCH_URL.format(match_id)
+        players_data = await get_data(self.session, url, "shotsData")
 
         if options:
             kwargs = options
