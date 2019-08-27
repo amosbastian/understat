@@ -194,3 +194,7 @@ class TestUnderstat(object):
         players = await understat.get_team_players(
             "Manchester United", 2018, {"position": "F S", "red_cards": "0"})
         assert isinstance(players, list)
+
+    async def test_get_match_players(self, loop, understat):
+        players = await understat.get_match_players(11670)
+        assert isinstance(players, dict)
