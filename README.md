@@ -4,8 +4,6 @@
     <br>
     <a href="https://www.codacy.com/app/amosbastian/understat?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=amosbastian/understat&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/716b2c24086a41d7a79481ac89748861"/></a>
     <a href="https://travis-ci.com/amosbastian/understat"><img src="https://travis-ci.com/amosbastian/understat.svg?branch=master"></a>
-    <a href="https://utopian.io/" alt="Utopian.io">
-        <img src="https://img.shields.io/badge/Supported%20by-Utopian.io-%23B10DC9.svg"/></a>
     <a href="https://pypi.org/project/understat/" alt="Version">
         <img src="https://badge.fury.io/py/understat.svg"/></a>
     <a href="https://pypi.org/project/understat/" alt="Python version">
@@ -27,36 +25,38 @@ To install it directly from GitHub you can do the following:
 You can also install a [.tar file](https://github.com/requests/requests/tarball/master)
 or [.zip file](https://github.com/requests/requests/tarball/master)
 
-    $ curl -OL https://github.com/amosbastian/understat/tarball/master
-    $ curl -OL https://github.com/amosbastian/understat/zipball/master # Windows
+    curl -OL https://github.com/amosbastian/understat/tarball/master
+    curl -OL https://github.com/amosbastian/understat/zipball/master # Windows
 
-Once it has been downloaded you can easily install it using `pip`::
+Once it has been downloaded you can easily install it using `pip`:
 
-    $ cd understat
-    $ pip install .
+    cd understat
+    pip install .
 
 ## Usage
 
-An example of using `Understat` can be found below:
+An example of using `understat` can be found below:
 
-    import asyncio
-    import json
+```python
+import asyncio
+import json
 
-    import aiohttp
+import aiohttp
 
-    from understat import Understat
-
-
-    async def main():
-        async with aiohttp.ClientSession() as session:
-            understat = Understat(session)
-            data = await understat.get_league_players("epl", 2018, {"team_title": "Manchester United"})
-            print(json.dumps(data))
+from understat import Understat
 
 
-    if __name__ == "__main__":
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(main())
+async def main():
+    async with aiohttp.ClientSession() as session:
+        understat = Understat(session)
+        data = await understat.get_league_players("epl", 2018, {"team_title": "Manchester United"})
+        print(json.dumps(data))
+
+
+if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+```
 
 
 ## Contributing
