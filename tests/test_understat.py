@@ -99,7 +99,7 @@ class TestUnderstat(object):
             assert not fixture["isResult"]
 
     async def test_get_league_fixtures_with_options(self, loop, understat):
-        results = await understat.get_league_fixtures("epl", 2019, {
+        results = await understat.get_league_fixtures("epl", 2020, {
             "h": {"id": "89",
                   "title": "Manchester United",
                   "short_title": "MUN"}
