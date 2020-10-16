@@ -128,6 +128,42 @@ class Understat():
 
         return filtered_data
 
+    async def get_league_table(self, league_name, season, with_headers=True):
+        """Returns the latest league table of a specified league in a specified year.
+
+        :param league_name: The league's name.
+        :type league_name: str
+        :param season: The season.
+        :type season: str or int
+        :param with_headers: whether or not to include headers in the returned table.
+        :type with_headers: bool
+        :return: List of lists.
+        :rtype: list
+        """
+
+        url = LEAGUE_URL.format(to_league_name(league_name), season)
+        stats = await get_data(self.session, url, "teamsData")
+
+        keys = ["wins", "draws", "loses", "scored", "missed",
+                "pts", "xG", "npxG", "xGA", "npxGA", "npxGD", "xpts"]
+        team_ids = [x for x in stats]
+
+        data = [
+            [stats[team_id]["title"], len(stats[team_id]["history"])] +
+            [round(sum(x[key] for x in stats[team_id]["history"]), 2)
+             for key in keys]
+            for team_id in team_ids
+        ]
+
+        # sort by pts descending, followed by goal difference descending
+        data = sorted(data, key=lambda x: (-x[7], x[6] - x[5]))
+
+        if with_headers:
+            data = [["Team", "M", "W", "D", "L", "G", "GA", "PTS", "xG",
+                     "NPxG", "xGA", "NPxGA", "NPxGD", "xPTS"]] + data
+
+        return data
+
     async def get_player_shots(self, player_id, options=None, **kwargs):
         """Returns the player with the given ID's shot data.
 

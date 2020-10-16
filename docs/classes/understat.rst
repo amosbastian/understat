@@ -142,6 +142,43 @@ which outputs (with parts omitted)
 
 ---
 
+.. automethod:: understat.Understat.get_league_table
+
+It returns the standings of the given league in the given year, as seen in the screenshot below
+
+.. image:: https://i.imgur.com/OpdXjcE.png
+
+An example of getting the standings from the EPL in 2019 can be found below
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            table = await understat.get_league_table("EPL", "2019")
+            print(table)
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs (with parts omitted)
+
+.. code-block:: javascript
+
+    [
+     ['Team', 'M', 'W', 'D', 'L', 'G', 'GA', 'PTS', 'xG', 'NPxG', 'xGA', 'NPxGA', 'NPxGD', 'xPTS'], 
+     ['Liverpool', 38, 32, 3, 3, 85, 33, 99, 75.19, 71.39, 39.57, 38.81, 32.58, 74.28], 
+     ['Manchester City', 38, 26, 3, 9, 102, 35, 81, 102.21, 93.53, 37.0, 34.71, 58.82, 86.76],
+     ['Manchester United', 38, 18, 12, 8, 66, 36, 66, 66.19, 55.53, 38.06, 35.78, 19.75, 70.99],
+     ...,
+     ['Aston Villa', 38, 9, 8, 21, 41, 67, 35, 45.09, 42.65, 71.6, 66.88, -24.23, 37.23], 
+     ['Bournemouth', 38, 9, 7, 22, 40, 65, 34, 44.67, 41.63, 63.29, 58.73, -17.1, 39.2], 
+     ['Watford', 38, 8, 10, 20, 36, 64, 34, 48.56, 42.47, 59.53, 52.52, -10.05, 47.87], 
+     ['Norwich', 38, 5, 6, 27, 26, 75, 21, 37.23, 35.71, 71.61, 66.13, -30.41, 33.12]
+    ]
+
+---
+
 .. automethod:: understat.Understat.get_player_grouped_stats
 
 It returns all the statistics of a given player, which includes stuff like
