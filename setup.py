@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="understat",
-    version="0.1.2",
+    version="0.1.3",
     packages=find_packages(),
     description="A Python wrapper for https://understat.com/",
     long_description=long_description,
@@ -20,6 +20,8 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7"
+        "Programming Language :: Python :: 3.8"
+        "Programming Language :: Python :: 3.9"
     ],
     keywords="fpl fantasy premier league understat football",
     project_urls={
@@ -28,7 +30,7 @@ setup(
     },
     install_requires=[
         "aiohttp",
-        "bs4",
+        "beautifulsoup4",
         "codecov",
         "pytest-aiohttp",
         "pytest-cov",
