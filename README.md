@@ -12,6 +12,8 @@
         <img src="https://readthedocs.org/projects/understat/badge/?version=latest&style=flat"></a>
 </p>
 
+Join the [Discord server](https://discord.gg/cjY37fv) or submit [an issue](https://github.com/amosbastian/understat/issues) for help and / or suggestions!
+
 ## Installing understat
 
 The recommended way to install understat is via `pip`.
