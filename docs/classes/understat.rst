@@ -603,7 +603,7 @@ which outputs (with parts omitted)
 It returns the information about the matches played by the given player. So for
 example, the matches Sergio Agüero has played, as seen in the screenshot
 
-.. image:: https://i.imgur.com/dE54ox0.png
+.. image:: https://i.imgur.com/p7jh1mh.png
 
 This function also comes with the `options` keyword argument, and also the
 `**kwargs` magic variable. An example of how you could
