@@ -145,22 +145,37 @@ class Understat():
         stats = await get_data(self.session, url, "teamsData")
 
         keys = ["wins", "draws", "loses", "scored", "missed",
-                "pts", "xG", "npxG", "xGA", "npxGA", "npxGD", "xpts"]
+                "pts", "xG", "npxG", "xGA", "npxGA", "npxGD",
+                "deep", "deep_allowed", "xpts"]
         team_ids = [x for x in stats]
 
-        data = [
-            [stats[team_id]["title"], len(stats[team_id]["history"])] +
-            [round(sum(x[key] for x in stats[team_id]["history"]), 2)
-             for key in keys]
-            for team_id in team_ids
-        ]
+        data = []
+        for team_id in team_ids:
+            team_data = []
+            season_stats = stats[team_id]["history"]
+            team_data.append(stats[team_id]["title"])
+            team_data.append(len(season_stats))
+            team_data.extend([round(sum(x[key] for x in season_stats), 2) for key in keys])
+
+            passes = sum(x["ppda"]["att"] for x in season_stats)
+            def_act = sum(x["ppda"]["def"] for x in season_stats)
+
+            o_passes = sum(x["ppda_allowed"]["att"] for x in season_stats)
+            o_def_act = sum(x["ppda_allowed"]["def"] for x in season_stats)
+
+            # insert PPDA and OPPDA so they match with the positions in the table on the website
+            team_data.insert(-3, round(passes / def_act, 2))
+            team_data.insert(-3, round(o_passes / o_def_act, 2))
+
+            data.append(team_data)
 
         # sort by pts descending, followed by goal difference descending
         data = sorted(data, key=lambda x: (-x[7], x[6] - x[5]))
 
         if with_headers:
             data = [["Team", "M", "W", "D", "L", "G", "GA", "PTS", "xG",
-                     "NPxG", "xGA", "NPxGA", "NPxGD", "xPTS"]] + data
+                     "NPxG", "xGA", "NPxGA", "NPxGD", "PPDA", "OPPDA",
+                     "DC", "ODC", "xPTS"]] + data
 
         return data
 
