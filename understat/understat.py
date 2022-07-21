@@ -3,7 +3,7 @@ from datetime import datetime
 from understat.constants import (BASE_URL, LEAGUE_URL, MATCH_URL, PLAYER_URL,
                                  TEAM_URL)
 from understat.utils import (filter_by_positions, filter_data, get_data,
-                             to_league_name)
+                             to_league_name, filter_by_date)
 
 
 class Understat():
@@ -155,13 +155,12 @@ class Understat():
                 "deep", "deep_allowed", "xpts"]
         team_ids = [x for x in stats]
 
-        start_date = datetime.strptime(start_date, "%Y-%m-%d") if start_date else datetime(int(season), 1, 1)
-        end_date = datetime.strptime(end_date, "%Y-%m-%d") if end_date else datetime.today()
-
         data = []
         for team_id in team_ids:
             team_data = []
-            season_stats = list(filter(lambda x: start_date <= datetime.strptime(x["date"].split()[0], "%Y-%m-%d") <= end_date, stats[team_id]["history"]))
+            season_stats = stats[team_id]["history"]
+            if start_date is not None or end_date is not None:
+                season_stats = filter_by_date(season_stats, start_date, end_date, season)
             team_data.append(stats[team_id]["title"])
             team_data.append(len(season_stats))
             team_data.extend([round(sum(x[key] for x in season_stats), 2) for key in keys])
