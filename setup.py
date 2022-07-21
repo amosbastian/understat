@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="understat",
-    version="0.1.4",
+    version="0.1.5",
     packages=find_packages(),
     description="A Python wrapper for https://understat.com/",
     long_description=long_description,
@@ -29,12 +29,12 @@ setup(
         "Source": "https://github.com/amosbastian/fpl"
     },
     install_requires=[
-        "aiohttp",
-        "beautifulsoup4",
-        "codecov",
-        "pytest-aiohttp",
-        "pytest-cov",
-        "pytest-mock",
-        "pytest",
+        "beautifulsoup4==4.9.3",
+        "codecov==2.1.12",
+        "pytest-aiohttp==0.3.0",
+        "pytest-cov==3.0.0",
+        "pytest-mock==3.6.0",
+        "pytest==6.2.0",
+        "aiohttp==3.7.4"
     ],
 )
