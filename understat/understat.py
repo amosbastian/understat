@@ -158,7 +158,7 @@ class Understat():
             team_data = []
             season_stats = stats[team_id]["history"]
             if start_date is not None or end_date is not None:
-                season_stats = filter_by_date(season_stats, start_date, end_date, season)
+                season_stats = filter_by_date(season_stats, season, start_date, end_date)
             team_data.append(stats[team_id]["title"])
             team_data.append(len(season_stats))
             team_data.extend([round(sum(x[key] for x in season_stats), 2) for key in keys])

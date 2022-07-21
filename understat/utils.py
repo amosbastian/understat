@@ -86,7 +86,7 @@ def filter_by_positions(data, positions):
     return relevant_stats
 
 
-def filter_by_date(data, start, end, season):
+def filter_by_date(data, season, start, end):
     """Filter data by start and end date."""
 
     # change strings to datetime if specified, otherwise get full season time span
