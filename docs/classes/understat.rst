@@ -148,6 +148,11 @@ It returns the standings of the given league in the given year, as seen in the s
 
 .. image:: https://i.imgur.com/fYo9zkz.png
 
+There are also optional "start_date" and "end_date=None" arguments,
+which can be used to get the table for a specific date range from given season, like on screenshot below
+
+.. image:: https://i.imgur.com/r30bdpn.png
+
 An example of getting the standings from the EPL in 2019 can be found below
 
 .. code-block:: python
