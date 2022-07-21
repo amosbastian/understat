@@ -2,7 +2,6 @@
     A Python package for https://understat.com/.
     <br>
     <br>
-    <a href="https://www.codacy.com/app/amosbastian/understat?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=amosbastian/understat&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/716b2c24086a41d7a79481ac89748861"/></a>
     <a href="https://travis-ci.com/amosbastian/understat"><img src="https://travis-ci.com/amosbastian/understat.svg?branch=master"></a>
     <a href="https://pypi.org/project/understat/" alt="Version">
         <img src="https://badge.fury.io/py/understat.svg"/></a>
