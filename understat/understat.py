@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from understat.constants import (BASE_URL, LEAGUE_URL, MATCH_URL, PLAYER_URL,
                                  TEAM_URL)
 from understat.utils import (filter_by_positions, filter_data, get_data,
