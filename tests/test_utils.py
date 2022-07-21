@@ -1,4 +1,4 @@
-from understat.utils import filter_by_positions, filter_data, to_league_name
+from understat.utils import filter_by_positions, filter_data, to_league_name, filter_by_date
 
 
 class TestUtils(object):
@@ -38,3 +38,18 @@ class TestUtils(object):
 
         filtered_data = filter_by_positions(data, "FW")
         assert filtered_data == [{"goals": {"avg": 0.0042}, "position": "FW"}]
+
+    @staticmethod
+    def test_filter_by_date():
+        data = [{'xG': 0.639599, 'xGA': 2.57262, 'date': '2022-03-16 17:30:00', 'wins': 0},
+                {'xG': 1.65069, 'xGA': 1.62777, 'date': '2022-07-27 15:00:00', 'wins': 0},
+                {'xG': 0.855926, 'xGA': 1.25668, 'date': '2022-09-05 20:00:00', 'wins': 1}]
+
+        filtered_data = filter_by_date(data, 2021, None, None)
+        assert filtered_data == [{'xG': 0.639599, 'xGA': 2.57262, 'date': '2022-03-16 17:30:00', 'wins': 0},
+                                 {'xG': 1.65069, 'xGA': 1.62777, 'date': '2022-07-27 15:00:00', 'wins': 0},
+                                 {'xG': 0.855926, 'xGA': 1.25668, 'date': '2022-09-05 20:00:00', 'wins': 1}]
+
+        filtered_data = filter_by_date(data, 2021, '2022-04-01', '2022-09-05')
+        assert filtered_data == [{'xG': 1.65069, 'xGA': 1.62777, 'date': '2022-07-27 15:00:00', 'wins': 0},
+                                 {'xG': 0.855926, 'xGA': 1.25668, 'date': '2022-09-05 20:00:00', 'wins': 1}]
