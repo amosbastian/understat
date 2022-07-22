@@ -170,8 +170,8 @@ class Understat():
             o_def_act = sum(x["ppda_allowed"]["def"] for x in season_stats)
 
             # insert PPDA and OPPDA so they match with the positions in the table on the website
-            team_data.insert(-3, round(0 if passes == 0 else (passes / def_act), 2))
-            team_data.insert(-3, round(0 if o_passes == 0 else (o_passes / o_def_act), 2))
+            team_data.insert(-3, round(0 if def_act == 0 else (passes / def_act), 2))
+            team_data.insert(-3, round(0 if o_def_act == 0 else (o_passes / o_def_act), 2))
 
             data.append(team_data)
 
