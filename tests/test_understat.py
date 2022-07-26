@@ -117,6 +117,10 @@ class TestUnderstat(object):
         table = await understat.get_league_table("epl", 2020)
         assert isinstance(table, list)
 
+    async def test_get_league_table_with_date(self, loop, understat):
+        table = await understat.get_league_table("epl", 2020, start_date="2020-11-01", end_date="2021-01-31")
+        assert isinstance(table, list)
+
     async def test_get_player_shots(self, loop, understat):
         player_shots = await understat.get_player_shots(619)
         assert isinstance(player_shots, list)

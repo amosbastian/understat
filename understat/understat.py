@@ -1,7 +1,7 @@
 from understat.constants import (BASE_URL, LEAGUE_URL, MATCH_URL, PLAYER_URL,
                                  TEAM_URL)
 from understat.utils import (filter_by_positions, filter_data, get_data,
-                             to_league_name)
+                             to_league_name, filter_by_date)
 
 
 class Understat():
@@ -128,7 +128,7 @@ class Understat():
 
         return filtered_data
 
-    async def get_league_table(self, league_name, season, with_headers=True):
+    async def get_league_table(self, league_name, season, with_headers=True, start_date=None, end_date=None):
         """Returns the latest league table of a specified league in a specified year.
 
         :param league_name: The league's name.
@@ -137,6 +137,10 @@ class Understat():
         :type season: str or int
         :param with_headers: whether or not to include headers in the returned table.
         :type with_headers: bool
+        :param start_date: start date to filter the table by (format: YYYY-MM-DD).
+        :type start_date: str
+        :param end_date: end date of the table to filter the table by (format: YYYY-MM-DD).
+        :type end_date: str
         :return: List of lists.
         :rtype: list
         """
@@ -153,6 +157,8 @@ class Understat():
         for team_id in team_ids:
             team_data = []
             season_stats = stats[team_id]["history"]
+            if start_date is not None or end_date is not None:
+                season_stats = filter_by_date(season_stats, season, start_date, end_date)
             team_data.append(stats[team_id]["title"])
             team_data.append(len(season_stats))
             team_data.extend([round(sum(x[key] for x in season_stats), 2) for key in keys])
@@ -164,8 +170,8 @@ class Understat():
             o_def_act = sum(x["ppda_allowed"]["def"] for x in season_stats)
 
             # insert PPDA and OPPDA so they match with the positions in the table on the website
-            team_data.insert(-3, round(passes / def_act, 2))
-            team_data.insert(-3, round(o_passes / o_def_act, 2))
+            team_data.insert(-3, round(0 if def_act == 0 else (passes / def_act), 2))
+            team_data.insert(-3, round(0 if o_def_act == 0 else (o_passes / o_def_act), 2))
 
             data.append(team_data)
 

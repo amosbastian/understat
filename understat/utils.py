@@ -1,6 +1,7 @@
 import codecs
 import json
 import re
+from datetime import datetime
 
 from bs4 import BeautifulSoup
 
@@ -83,3 +84,17 @@ def filter_by_positions(data, positions):
             relevant_stats.append(stats)
 
     return relevant_stats
+
+
+def filter_by_date(data, season, start, end):
+    """Filter data by start and end date."""
+
+    # change strings to datetime if specified, otherwise get full season time span
+    try:
+        start = datetime.strptime(start, "%Y-%m-%d") if start is not None else datetime(int(season), 1, 1)
+        end = datetime.strptime(end, "%Y-%m-%d") if end is not None else datetime(int(season) + 2, 1, 1)
+
+        return list(filter(lambda x: start <= datetime.strptime(x["date"].split()[0], "%Y-%m-%d") <= end, data))
+
+    except ValueError:
+        raise ValueError("Invalid date format. Please use YYYY-MM-DD.")
