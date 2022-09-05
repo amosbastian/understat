@@ -137,7 +137,7 @@ class Understat():
         :type season: str or int
         :param with_headers: whether or not to include headers in the returned table.
         :type with_headers: bool
-        :param h_a: whether to return the overall table, home table, or away table
+        :param h_a: whether to return the overall table ("overall"), home table ("home"), or away table ("away").
         :type h_a: str
         :param start_date: start date to filter the table by (format: YYYY-MM-DD).
         :type start_date: str
@@ -161,7 +161,7 @@ class Understat():
             season_stats = stats[team_id]["history"]
             if start_date is not None or end_date is not None:
                 season_stats = filter_by_date(season_stats, season, start_date, end_date)
-            if h_a != "overall":
+            if h_a[0].lower() != "o":
                 season_stats = filter_data(season_stats, options={"h_a": h_a[0].lower()})
             team_data.append(stats[team_id]["title"])
             team_data.append(len(season_stats))
