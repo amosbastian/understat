@@ -128,7 +128,7 @@ class Understat():
 
         return filtered_data
 
-    async def get_league_table(self, league_name, season, with_headers=True, start_date=None, end_date=None):
+    async def get_league_table(self, league_name, season, with_headers=True, h_a="overall", start_date=None, end_date=None):
         """Returns the latest league table of a specified league in a specified year.
 
         :param league_name: The league's name.
@@ -137,6 +137,8 @@ class Understat():
         :type season: str or int
         :param with_headers: whether or not to include headers in the returned table.
         :type with_headers: bool
+        :param h_a: whether to return the overall table ("overall"), home table ("home"), or away table ("away").
+        :type h_a: str
         :param start_date: start date to filter the table by (format: YYYY-MM-DD).
         :type start_date: str
         :param end_date: end date of the table to filter the table by (format: YYYY-MM-DD).
@@ -159,6 +161,8 @@ class Understat():
             season_stats = stats[team_id]["history"]
             if start_date is not None or end_date is not None:
                 season_stats = filter_by_date(season_stats, season, start_date, end_date)
+            if h_a[0].lower() != "o":
+                season_stats = filter_data(season_stats, options={"h_a": h_a[0].lower()})
             team_data.append(stats[team_id]["title"])
             team_data.append(len(season_stats))
             team_data.extend([round(sum(x[key] for x in season_stats), 2) for key in keys])
