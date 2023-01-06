@@ -27,7 +27,7 @@ def to_league_name(league_name):
 
 
 async def fetch(session, url):
-    async with session.get(url) as response:
+    async with session.get(url, cookies={"beget": "begetok"}) as response:
         return await response.text()
 
 
