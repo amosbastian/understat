@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="understat",
-    version="0.1.8",
+    version="0.1.9",
     packages=find_packages(),
     description="A Python wrapper for https://understat.com/",
     long_description=long_description,
