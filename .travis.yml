@@ -12,6 +12,3 @@ install:
 
 script:
   - pytest --cov=fpl
-
-after_success:
-  - codecov

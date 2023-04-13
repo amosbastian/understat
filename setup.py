@@ -30,7 +30,6 @@ setup(
     },
     install_requires=[
         "beautifulsoup4==4.11.1",
-        "codecov==2.1.12",
         "pytest-aiohttp==1.0.4",
         "pytest-cov==4.0.0",
         "pytest-mock==3.6.0",
