@@ -605,8 +605,8 @@ which outputs (with parts omitted)
 
 .. automethod:: understat.Understat.get_match_stats
 
-It returns the information about the matches played by the given player. So for
-example, the match stats from Wolves v Chelsea 2023-12-24, as seen in the screenshot
+It returns the stats for the given match. 
+So for example, the match stats from Wolves v Chelsea 2023-12-24, as seen in the screenshot:
 
 .. image:: https://i.imgur.com/JJA1wnx.png
 
