@@ -603,6 +603,62 @@ which outputs (with parts omitted)
 
 ---
 
+.. automethod:: understat.Understat.get_match_stats
+
+It returns the information about the matches played by the given player. So for
+example, the match stats from Wolves v Chelsea 2023-12-24, as seen in the screenshot
+
+.. image:: https://i.imgur.com/JJA1wnx.png
+
+To view the match stats for Wolves v Chelsea 2023-12-24, you can use the following code:
+
+.. code-block:: python
+
+    async def main():
+        async with aiohttp.ClientSession() as session:
+            understat = Understat(session)
+            match_stats = await understat.get_match_stats(22073)
+            print(json.dumps(match_stats))
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+which outputs
+
+.. code-block:: javascript
+
+    [
+        {
+            "id": "22073",
+            "fid": "1729511",
+            "h": "229",
+            "a": "80",
+            "date": "2023-12-24 13:00:00",
+            "league_id": "1",
+            "season": "2023",
+            "h_goals": "2",
+            "a_goals": "1",
+            "team_h": "Wolverhampton Wanderers",
+            "team_a": "Chelsea",
+            "h_xg": "1.74626",
+            "a_xg": "1.75447",
+            "h_w": "0.3603",
+            "h_d": "0.2626",
+            "h_l": "0.3771",
+            "league": "EPL",
+            "h_shot": "14",
+            "a_shot": "16",
+            "h_shotOnTarget": "6",
+            "a_shotOnTarget": "5",
+            "h_deep": "6",
+            "a_deep": "19",
+            "a_ppda": "6.7059",
+            "h_ppda": "11.5172"
+        }
+    ]
+
+---
+
 .. automethod:: understat.Understat.get_player_matches
 
 It returns the information about the matches played by the given player. So for
