@@ -352,6 +352,22 @@ class Understat():
         filtered_data = filter_data(players_data, kwargs)
 
         return filtered_data
+    
+    async def get_match_stats(self, match_id):
+        """Returns a dictionary containing stats from a given match
+
+        :param fixture_id: A match's ID.
+        :type fixture_id: int
+        :return: Dictionary containing stats about the match played
+        :rtype: dict
+        """
+
+        url = MATCH_URL.format(match_id)
+        stats_data = await get_data(self.session, url, "match_info")
+
+        filtered_data = filter_data(stats_data, None)
+
+        return filtered_data
 
     async def get_match_players(self, match_id, options=None, **kwargs):
         """Returns a dictionary containing information about the players who
