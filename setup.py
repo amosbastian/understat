@@ -34,6 +34,6 @@ setup(
         "pytest-cov==4.0.0",
         "pytest-mock==3.6.0",
         "pytest==7.2.0",
-        "aiohttp==3.8.3"
+        "aiohttp==3.8.5"
     ],
 )
