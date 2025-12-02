@@ -105,3 +105,4 @@ venv.bak/
 
 test.py
 .vscode/
+.pypirc

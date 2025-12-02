@@ -35,9 +35,10 @@ def find_match(scripts, pattern):
     """Returns the first match found in the given scripts."""
 
     for script in scripts:
-        match = re.search(pattern, script.string)
-        if match:
-            break
+        if script.string:
+            match = re.search(pattern, script.string)
+            if match:
+                break
 
     return match
 
