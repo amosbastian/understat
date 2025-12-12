@@ -1,4 +1,4 @@
-from understat.constants import (BASE_URL, LEAGUE_URL, MATCH_URL, PLAYER_URL,
+from understat.constants import (LEAGUE_URL, MATCH_URL, PLAYER_URL, STATS_URL,
                                  TEAM_URL)
 from understat.utils import (filter_by_positions, filter_data, get_data,
                              to_league_name, filter_by_date)
@@ -17,7 +17,8 @@ class Understat():
         :rtype: list
         """
 
-        stats = await get_data(self.session, BASE_URL, "statData")
+        stats = await get_data(self.session, STATS_URL, "statData")
+        stats = stats["stat"]
 
         if options:
             kwargs = options
@@ -43,6 +44,7 @@ class Understat():
 
         url = LEAGUE_URL.format(to_league_name(league_name), season)
         teams_data = await get_data(self.session, url, "teamsData")
+        teams_data = teams_data["teams"]
 
         if options:
             kwargs = options
@@ -68,6 +70,7 @@ class Understat():
 
         url = LEAGUE_URL.format(to_league_name(league_name), season)
         players_data = await get_data(self.session, url, "playersData")
+        players_data = players_data["players"]
 
         if options:
             kwargs = options
@@ -93,6 +96,7 @@ class Understat():
 
         url = LEAGUE_URL.format(to_league_name(league_name), season)
         dates_data = await get_data(self.session, url, "datesData")
+        dates_data = dates_data["dates"]
         results = [r for r in dates_data if r["isResult"]]
 
         if options:
@@ -119,6 +123,7 @@ class Understat():
 
         url = LEAGUE_URL.format(to_league_name(league_name), season)
         dates_data = await get_data(self.session, url, "datesData")
+        dates_data = dates_data["dates"]
         fixtures = [f for f in dates_data if not f["isResult"]]
 
         if options:
@@ -149,6 +154,7 @@ class Understat():
 
         url = LEAGUE_URL.format(to_league_name(league_name), season)
         stats = await get_data(self.session, url, "teamsData")
+        stats = stats["teams"]
 
         keys = ["wins", "draws", "loses", "scored", "missed",
                 "pts", "xG", "npxG", "xGA", "npxGA", "npxGD",
@@ -202,6 +208,7 @@ class Understat():
 
         url = PLAYER_URL.format(player_id)
         shots_data = await get_data(self.session, url, "shotsData")
+        shots_data = shots_data["shots"]
 
         if options:
             kwargs = options
@@ -222,6 +229,7 @@ class Understat():
         """
         url = PLAYER_URL.format(player_id)
         matches_data = await get_data(self.session, url, "matchesData")
+        matches_data = matches_data["matches"]
 
         if options:
             kwargs = options
@@ -243,6 +251,7 @@ class Understat():
         """
         url = PLAYER_URL.format(player_id)
         player_stats = await get_data(self.session, url, "minMaxPlayerStats")
+        player_stats = player_stats["minMaxPlayerStats"]
 
         player_stats = filter_by_positions(player_stats, positions)
 
@@ -259,6 +268,7 @@ class Understat():
         """
         url = PLAYER_URL.format(player_id)
         player_stats = await get_data(self.session, url, "groupsData")
+        player_stats = player_stats["groups"]
 
         return player_stats
 
@@ -276,6 +286,7 @@ class Understat():
 
         url = TEAM_URL.format(team_name.replace(" ", "_"), season)
         team_stats = await get_data(self.session, url, "statisticsData")
+        team_stats = team_stats["statistics"]
 
         return team_stats
 
@@ -295,6 +306,7 @@ class Understat():
 
         url = TEAM_URL.format(team_name.replace(" ", "_"), season)
         dates_data = await get_data(self.session, url, "datesData")
+        dates_data = dates_data["dates"]
         results = [r for r in dates_data if r["isResult"]]
 
         if options:
@@ -320,6 +332,7 @@ class Understat():
 
         url = TEAM_URL.format(team_name.replace(" ", "_"), season)
         dates_data = await get_data(self.session, url, "datesData")
+        dates_data = dates_data["dates"]
         fixtures = [f for f in dates_data if not f["isResult"]]
 
         if options:
@@ -345,27 +358,12 @@ class Understat():
 
         url = TEAM_URL.format(team_name.replace(" ", "_"), season)
         players_data = await get_data(self.session, url, "playersData")
+        players_data = players_data["players"]
 
         if options:
             kwargs = options
 
         filtered_data = filter_data(players_data, kwargs)
-
-        return filtered_data
-    
-    async def get_match_stats(self, match_id):
-        """Returns a dictionary containing stats from a given match
-
-        :param fixture_id: A match's ID.
-        :type fixture_id: int
-        :return: Dictionary containing stats about the match played
-        :rtype: dict
-        """
-
-        url = MATCH_URL.format(match_id)
-        stats_data = await get_data(self.session, url, "match_info")
-
-        filtered_data = filter_data(stats_data, None)
 
         return filtered_data
 
@@ -384,6 +382,7 @@ class Understat():
 
         url = MATCH_URL.format(match_id)
         players_data = await get_data(self.session, url, "rostersData")
+        players_data = players_data["rosters"]
 
         if options:
             kwargs = options
@@ -407,6 +406,7 @@ class Understat():
 
         url = MATCH_URL.format(match_id)
         players_data = await get_data(self.session, url, "shotsData")
+        players_data = players_data["shots"]
 
         if options:
             kwargs = options
