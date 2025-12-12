@@ -1,11 +1,6 @@
-import codecs
 import json
-import re
+
 from datetime import datetime
-
-from bs4 import BeautifulSoup
-
-from understat.constants import PATTERN
 
 
 def to_league_name(league_name):
@@ -27,42 +22,14 @@ def to_league_name(league_name):
 
 
 async def fetch(session, url):
-    async with session.get(url, cookies={"beget": "begetok"}) as response:
+    async with session.get(url, headers={'X-Requested-With': 'XMLHttpRequest'}) as response:
         return await response.text()
 
 
-def find_match(scripts, pattern):
-    """Returns the first match found in the given scripts."""
-
-    for script in scripts:
-        if script.string:
-            match = re.search(pattern, script.string)
-            if match:
-                break
-
-    return match
-
-
-def decode_data(match):
-    """Returns data in the match's first group decoded to JSON."""
-
-    byte_data = codecs.escape_decode(match.group(1))
-    json_data = json.loads(byte_data[0].decode("utf-8"))
-
-    return json_data
-
 async def get_data(session, url, data_type):
     """Returns data from the given URL of the given data type."""
-
     html = await fetch(session, url)
-    soup = BeautifulSoup(html, "html.parser")
-    scripts = soup.find_all("script")
-
-    pattern = re.compile(PATTERN.format(data_type))
-    match = find_match(scripts, pattern)
-    data = decode_data(match)
-
-    return data
+    return json.loads(html)
 
 
 def filter_data(data, options):
