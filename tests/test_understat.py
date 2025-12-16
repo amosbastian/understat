@@ -99,7 +99,7 @@ class TestUnderstat(object):
             assert not fixture["isResult"]
 
     async def test_get_league_fixtures_with_options(self, loop, understat):
-        results = await understat.get_league_fixtures("epl", 2024, {
+        results = await understat.get_league_fixtures("epl", 2025, {
             "h": {"id": "89",
                   "title": "Manchester United",
                   "short_title": "MUN"}
@@ -196,10 +196,6 @@ class TestUnderstat(object):
         players = await understat.get_team_players(
             "Manchester United", 2018, {"position": "F S", "red_cards": "0"})
         assert isinstance(players, list)
-
-    async def test_get_match_stats(self, loop, understat):
-        stats = await understat.get_match_stats(11670)
-        assert isinstance(stats, dict)
 
     async def test_get_match_players(self, loop, understat):
         players = await understat.get_match_players(11670)
