@@ -29,7 +29,7 @@ setup(
         "Source": "https://github.com/amosbastian/fpl"
     },
     install_requires=[
-        "beautifulsoup4==4.11.1",
+        "beautifulsoup4==4.12.3",
         "pytest-aiohttp==1.0.4",
         "pytest-cov==4.0.0",
         "pytest-mock==3.6.0",
